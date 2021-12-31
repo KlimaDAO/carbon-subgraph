@@ -1,0 +1,48 @@
+specVersion: 0.0.2
+description: Polygon Bridged Carbon
+repository: https://github.com/cujowolf/carbon-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ToucanFactory
+    network: matic
+    source:
+      address: '0x2359677E513Bc83106268514c5B2De3C29C849ea'
+      abi: ToucanCarbonOffsetsFactory
+      startBlock: 20100000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/ToucanFactory.ts
+      entities:
+        - ToucanCarbonOffsetsFactory
+      abis:
+        - name: ToucanCarbonOffsetsFactory
+          file: ./abis/ToucanCarbonOffsetsFactory.json
+      eventHandlers:
+        - event: TokenCreated(uint256,address)
+          handler: handleNewTCO2
+templates:
+  - name: ToucanCarbonOffsets
+    kind: ethereum/contract
+    network: matic
+    source:
+      abi: ToucanCarbonOffsets
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - ToucanCarbonOffsets
+      abis:
+        - name: ToucanCarbonOffsets
+          file: ./abis/ToucanCarbonOffsets.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/ToucanCarbonOffsets.ts
+  
