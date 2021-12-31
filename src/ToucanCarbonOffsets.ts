@@ -22,7 +22,7 @@ export function handleTransfer(event: Transfer): void {
 
         let bridge = loadOrCreateBridge(carbonOffset, transaction)
         bridge.value = toDecimal(event.params.value, 18)
-        bridge.bridger = event.params.to.toHex()
+        bridge.bridger = event.params.to.toHexString()
 
         bridge.save()
 
@@ -36,7 +36,7 @@ export function handleTransfer(event: Transfer): void {
 
         let retire = loadOrCreateRetire(carbonOffset, transaction)
         retire.value = toDecimal(event.params.value, 18)
-        retire.retiree = event.params.from.toHex()
+        retire.retiree = event.params.from.toHexString()
 
         retire.save()
 
