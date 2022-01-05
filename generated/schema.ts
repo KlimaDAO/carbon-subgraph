@@ -35,6 +35,7 @@ export class CarbonOffset extends Entity {
     this.set("correspAdjustment", Value.fromString(""));
     this.set("additionalCertification", Value.fromString(""));
     this.set("klimaRanking", Value.fromBigInt(BigInt.zero()));
+    this.set("balanceBCT", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("lastUpdate", Value.fromBigInt(BigInt.zero()));
   }
 
@@ -276,6 +277,15 @@ export class CarbonOffset extends Entity {
     } else {
       this.set("retirements", Value.fromStringArray(<Array<string>>value));
     }
+  }
+
+  get balanceBCT(): BigDecimal {
+    let value = this.get("balanceBCT");
+    return value!.toBigDecimal();
+  }
+
+  set balanceBCT(value: BigDecimal) {
+    this.set("balanceBCT", Value.fromBigDecimal(value));
   }
 
   get lastUpdate(): BigInt {

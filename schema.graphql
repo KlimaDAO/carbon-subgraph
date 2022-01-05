@@ -22,6 +22,7 @@ type CarbonOffset @entity {
   klimaRanking: BigInt!
   bridges: [Bridge!] @derivedFrom(field: "offset")
   retirements: [Retire!] @derivedFrom(field: "offset")
+  balanceBCT: BigDecimal!
   lastUpdate: BigInt!
 }
 
