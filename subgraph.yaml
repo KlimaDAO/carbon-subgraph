@@ -46,6 +46,26 @@ dataSources:
           handler: handleDeposit
         - event: Redeemed(address,address,uint256)
           handler: handleRedeem
+  - kind: ethereum/contract
+    name: MossCarbon
+    network: matic
+    source:
+      address: '0xaa7dbd1598251f856c12f63557a4c4397c253cea'
+      abi: ERC20
+      startBlock: 23193932
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/MossCarbon.ts
+      entities:
+        - MossCarbon
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
 templates:
   - name: ToucanCarbonOffsets
     kind: ethereum/contract
