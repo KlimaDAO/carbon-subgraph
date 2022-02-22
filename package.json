@@ -12,7 +12,7 @@
     "watch-local": "graph deploy --watch --debug --node http://127.0.0.1:8020/ --ipfs http://127.0.0.1:5001 polygon-bridged-carbon",
     "deploy-local": "graph deploy --node http://127.0.0.1:8020 --ipfs http://127.0.0.1:5001 polygon-bridged-carbon",
     "deploy-staging": "graph deploy --ipfs https://api.staging.thegraph.com/ipfs/ --node https://api.staging.thegraph.com/deploy/ polygon-bridged-carbon",
-    "deploy": "graph deploy --product hosted-services cujowolf/polygon-bridged-carbon"
+    "deploy": "graph deploy --product hosted-service cujowolf/polygon-bridged-carbon"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.25.1",

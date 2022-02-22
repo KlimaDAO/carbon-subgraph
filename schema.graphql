@@ -23,6 +23,7 @@ type CarbonOffset @entity {
   bridges: [Bridge!] @derivedFrom(field: "offset")
   retirements: [Retire!] @derivedFrom(field: "offset")
   balanceBCT: BigDecimal!
+  balanceNCT: BigDecimal!
   lastUpdate: BigInt!
 }
 
@@ -33,6 +34,26 @@ type Bridge @entity {
   offset: CarbonOffset!
   value: BigDecimal!
   bridger: String!
+}
+
+type Deposit @entity {
+  id: ID!
+  timestamp: BigInt!
+  transaction: Transaction!
+  offset: CarbonOffset!
+  pool: String!
+  value: BigDecimal!
+  depositor: String!
+}
+
+type Redeem @entity {
+  id: ID!
+  timestamp: BigInt!
+  transaction: Transaction!
+  offset: CarbonOffset!
+  pool: String!
+  value: BigDecimal!
+  redeemer: String!
 }
 
 type Retire @entity {

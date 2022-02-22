@@ -36,6 +36,7 @@ export class CarbonOffset extends Entity {
     this.set("additionalCertification", Value.fromString(""));
     this.set("klimaRanking", Value.fromBigInt(BigInt.zero()));
     this.set("balanceBCT", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("balanceNCT", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("lastUpdate", Value.fromBigInt(BigInt.zero()));
   }
 
@@ -288,6 +289,15 @@ export class CarbonOffset extends Entity {
     this.set("balanceBCT", Value.fromBigDecimal(value));
   }
 
+  get balanceNCT(): BigDecimal {
+    let value = this.get("balanceNCT");
+    return value!.toBigDecimal();
+  }
+
+  set balanceNCT(value: BigDecimal) {
+    this.set("balanceNCT", Value.fromBigDecimal(value));
+  }
+
   get lastUpdate(): BigInt {
     let value = this.get("lastUpdate");
     return value!.toBigInt();
@@ -379,6 +389,194 @@ export class Bridge extends Entity {
 
   set bridger(value: string) {
     this.set("bridger", Value.fromString(value));
+  }
+}
+
+export class Deposit extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("transaction", Value.fromString(""));
+    this.set("offset", Value.fromString(""));
+    this.set("pool", Value.fromString(""));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("depositor", Value.fromString(""));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Deposit entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Deposit entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Deposit", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Deposit | null {
+    return changetype<Deposit | null>(store.get("Deposit", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get offset(): string {
+    let value = this.get("offset");
+    return value!.toString();
+  }
+
+  set offset(value: string) {
+    this.set("offset", Value.fromString(value));
+  }
+
+  get pool(): string {
+    let value = this.get("pool");
+    return value!.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get depositor(): string {
+    let value = this.get("depositor");
+    return value!.toString();
+  }
+
+  set depositor(value: string) {
+    this.set("depositor", Value.fromString(value));
+  }
+}
+
+export class Redeem extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("transaction", Value.fromString(""));
+    this.set("offset", Value.fromString(""));
+    this.set("pool", Value.fromString(""));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("redeemer", Value.fromString(""));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Redeem entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Redeem entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Redeem", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Redeem | null {
+    return changetype<Redeem | null>(store.get("Redeem", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get offset(): string {
+    let value = this.get("offset");
+    return value!.toString();
+  }
+
+  set offset(value: string) {
+    this.set("offset", Value.fromString(value));
+  }
+
+  get pool(): string {
+    let value = this.get("pool");
+    return value!.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value!.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
+
+  get redeemer(): string {
+    let value = this.get("redeemer");
+    return value!.toString();
+  }
+
+  set redeemer(value: string) {
+    this.set("redeemer", Value.fromString(value));
   }
 }
 

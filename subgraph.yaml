@@ -47,6 +47,28 @@ dataSources:
         - event: Redeemed(address,address,uint256)
           handler: handleRedeem
   - kind: ethereum/contract
+    name: NCT
+    network: matic
+    source:
+      address: '0xD838290e877E0188a4A44700463419ED96c16107'
+      abi: NCT
+      startBlock: 24705011
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/NCT.ts
+      entities:
+        - NCT
+      abis:
+        - name: NCT
+          file: ./abis/BaseCarbonTonne.json
+      eventHandlers:
+        - event: Deposited(address,uint256)
+          handler: handleDeposit
+        - event: Redeemed(address,address,uint256)
+          handler: handleRedeem
+  - kind: ethereum/contract
     name: MossCarbon
     network: matic
     source:
