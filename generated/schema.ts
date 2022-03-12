@@ -16,6 +16,7 @@ export class CarbonOffset extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
+    this.set("name", Value.fromString(""));
     this.set("tokenAddress", Value.fromString(""));
     this.set("bridge", Value.fromString(""));
     this.set("registry", Value.fromString(""));
@@ -26,6 +27,7 @@ export class CarbonOffset extends Entity {
     this.set("projectID", Value.fromString(""));
     this.set("standard", Value.fromString(""));
     this.set("methodology", Value.fromString(""));
+    this.set("country", Value.fromString(""));
     this.set("region", Value.fromString(""));
     this.set("storageMethod", Value.fromString(""));
     this.set("method", Value.fromString(""));
@@ -37,6 +39,8 @@ export class CarbonOffset extends Entity {
     this.set("klimaRanking", Value.fromBigInt(BigInt.zero()));
     this.set("balanceBCT", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("balanceNCT", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("balanceUBO", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("balanceNBO", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("lastUpdate", Value.fromBigInt(BigInt.zero()));
   }
 
@@ -64,6 +68,15 @@ export class CarbonOffset extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get name(): string {
+    let value = this.get("name");
+    return value!.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
   }
 
   get tokenAddress(): string {
@@ -154,6 +167,15 @@ export class CarbonOffset extends Entity {
 
   set methodology(value: string) {
     this.set("methodology", Value.fromString(value));
+  }
+
+  get country(): string {
+    let value = this.get("country");
+    return value!.toString();
+  }
+
+  set country(value: string) {
+    this.set("country", Value.fromString(value));
   }
 
   get region(): string {
@@ -296,6 +318,24 @@ export class CarbonOffset extends Entity {
 
   set balanceNCT(value: BigDecimal) {
     this.set("balanceNCT", Value.fromBigDecimal(value));
+  }
+
+  get balanceUBO(): BigDecimal {
+    let value = this.get("balanceUBO");
+    return value!.toBigDecimal();
+  }
+
+  set balanceUBO(value: BigDecimal) {
+    this.set("balanceUBO", Value.fromBigDecimal(value));
+  }
+
+  get balanceNBO(): BigDecimal {
+    let value = this.get("balanceNBO");
+    return value!.toBigDecimal();
+  }
+
+  set balanceNBO(value: BigDecimal) {
+    this.set("balanceNBO", Value.fromBigDecimal(value));
   }
 
   get lastUpdate(): BigInt {

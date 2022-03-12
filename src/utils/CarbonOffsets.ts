@@ -1,6 +1,7 @@
 import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts"
 import { CarbonOffset, Transaction } from '../../generated/schema'
 import { ToucanCarbonOffsets } from "../../generated/templates/ToucanCarbonOffsets/ToucanCarbonOffsets"
+import { C3ProjectToken } from "../../generated/templates/C3ProjectToken/C3ProjectToken"
 
 
 export function loadOrCreateCarbonOffset(transaction: Transaction, token: Address, bridge: String, registry: String): CarbonOffset {
@@ -12,6 +13,9 @@ export function loadOrCreateCarbonOffset(transaction: Transaction, token: Addres
 
         if (bridge == 'Toucan') {
             carbonOffset = createToucanCarbonOffset(transaction, token, bridge, registry)
+        }
+        else if (bridge == 'C3') {
+            carbonOffset = createC3ProjectToken(transaction, token, bridge)
         }
         else {
             carbonOffset = new CarbonOffset(id)
@@ -59,11 +63,14 @@ export function createToucanCarbonOffset(transaction: Transaction, token: Addres
     carbonOffset.totalBridged = BigDecimal.fromString('0')
     carbonOffset.totalRetired = BigDecimal.fromString('0')
     carbonOffset.currentSupply = BigDecimal.fromString('0')
+    carbonOffset.name = ''
+    carbonOffset.region = ''
+
     carbonOffset.vintage = attributes.value1.startTime.toString()
     carbonOffset.projectID = attributes.value0.projectId
     carbonOffset.standard = attributes.value0.standard
     carbonOffset.methodology = attributes.value0.methodology
-    carbonOffset.region = attributes.value0.region
+    carbonOffset.country = attributes.value0.region
     carbonOffset.storageMethod = attributes.value0.storageMethod
     carbonOffset.method = attributes.value0.method
     carbonOffset.emissionType = attributes.value0.emissionType
@@ -79,6 +86,55 @@ export function createToucanCarbonOffset(transaction: Transaction, token: Addres
     if (token.toString() == '0x92BFcddaC83f2e94f02fc7aA092EB6AEc08A0DEC') {
         carbonOffset.klimaRanking = BigInt.fromString('253370786400' + carbonOffset.projectID.substring(4).padStart(6, '0'))
     }
+
+    return carbonOffset as CarbonOffset
+}
+
+// Create and set the attribute information for a C3T Token
+export function createC3ProjectToken(transaction: Transaction, token: Address, bridge: String): CarbonOffset {
+    let id = token.toHex()
+
+    let carbonOffsetERC20 = C3ProjectToken.bind(token)
+
+    let carbonOffset = new CarbonOffset(id)
+
+    let attributes = carbonOffsetERC20.getProjectInfo()
+
+    carbonOffset.tokenAddress = token.toHex()
+    carbonOffset.bridge = bridge.toString()
+    carbonOffset.totalBridged = BigDecimal.fromString('0')
+    carbonOffset.totalRetired = BigDecimal.fromString('0')
+    carbonOffset.currentSupply = BigDecimal.fromString('0')
+
+    if (attributes.registry === 'VCS') {
+        carbonOffset.registry = 'Verra'
+    } else {
+        carbonOffset.registry = attributes.registry
+    }
+
+    carbonOffset.vintage = (
+        new Date(carbonOffsetERC20.getVintage().toI64()
+    ).getTime() / 1000).toString()
+
+    carbonOffset.name = attributes.name
+    carbonOffset.projectID = attributes.project_id
+    carbonOffset.standard = attributes.registry
+    carbonOffset.methodology = attributes.methodology
+    carbonOffset.country = attributes.country
+    carbonOffset.region = attributes.region
+    carbonOffset.category = attributes.project_type
+    carbonOffset.additionalCertification = attributes.ac
+
+    // Not currently mapped by C3
+    carbonOffset.method = ''
+    carbonOffset.storageMethod = ''
+    carbonOffset.emissionType = ''
+    carbonOffset.coBenefits = ''
+    carbonOffset.correspAdjustment = ''
+
+
+    carbonOffset.klimaRanking = BigInt.fromString(carbonOffset.vintage + carbonOffset.projectID.substring(4).padStart(6, '0'))
+    carbonOffset.lastUpdate = transaction.timestamp
 
     return carbonOffset as CarbonOffset
 }
