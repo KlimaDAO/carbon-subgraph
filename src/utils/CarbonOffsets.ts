@@ -70,7 +70,7 @@ export function createToucanCarbonOffset(transaction: Transaction, token: Addres
     carbonOffset.projectID = attributes.value0.projectId
     carbonOffset.standard = attributes.value0.standard
     carbonOffset.methodology = attributes.value0.methodology
-    carbonOffset.country = attributes.value0.region
+    carbonOffset.region = attributes.value0.region
     carbonOffset.storageMethod = attributes.value0.storageMethod
     carbonOffset.method = attributes.value0.method
     carbonOffset.emissionType = attributes.value0.emissionType
@@ -113,8 +113,11 @@ export function createC3ProjectToken(transaction: Transaction, token: Address, b
     }
 
     carbonOffset.vintage = (
-        new Date(carbonOffsetERC20.getVintage().toI64()
-    ).getTime() / 1000).toString()
+        Date.UTC(
+            carbonOffsetERC20.getVintage().toI32(),
+            0
+        ) / 1000
+    ).toString()
 
     carbonOffset.name = attributes.name
     carbonOffset.projectID = attributes.project_id
