@@ -81,3 +81,17 @@ type Transaction @entity {
   gasUsed: BigInt!
   gasPrice: BigInt!
 }
+
+type KlimaRetire @entity {
+  id: ID!
+  timestamp: BigInt!
+  transaction: Transaction!
+  offset: CarbonOffset!
+  pool: String!
+  amount: BigDecimal!
+  retiringAddress: String!
+  beneficiary: String!
+  beneficiaryAddress: String!
+  retirementMessage: String!
+  specific: Boolean!
+}

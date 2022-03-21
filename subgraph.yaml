@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 description: Polygon Bridged Carbon
-repository: https://github.com/cujowolf/carbon-subgraph
+repository: https://github.com/KlimaDAO/carbon-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
@@ -154,6 +154,47 @@ dataSources:
           handler: handleDeposit
         - event: Redeemed(address,address,uint256)
           handler: handleRedeem
+  # Retirement aggregator
+  - kind: ethereum/contract
+    name: RetireToucanCarbon
+    network: matic
+    source:
+      address: '0xCefb61aF5325C0c100cBd77eb4c9F51d17B189Ca'
+      abi: RetireToucanCarbon
+      startBlock: 25476120
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/KlimaRetirementAggregator.ts
+      entities:
+        - KlimaRetire
+      abis:
+        - name: RetireToucanCarbon
+          file: ./abis/RetireToucanCarbon.json
+      eventHandlers:
+        - event: ToucanRetired(indexed address,indexed address,string,string,indexed address,address,uint256)
+          handler: handleToucanRetired
+  - kind: ethereum/contract
+    name: RetireMossCarbon
+    network: matic
+    source:
+      address: '0xa35f62dbdb93e4B772784E89B7B35736A4aeaCc5'
+      abi: RetireMossCarbon
+      startBlock: 25476110
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/KlimaRetirementAggregator.ts
+      entities:
+        - KlimaRetire
+      abis:
+        - name: RetireMossCarbon
+          file: ./abis/RetireMossCarbon.json
+      eventHandlers:
+        - event: MossRetired(indexed address,indexed address,string,string,indexed address,uint256)
+          handler: handleMossRetired
 templates:
   - name: ToucanCarbonOffsets
     kind: ethereum/contract
