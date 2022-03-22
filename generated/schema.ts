@@ -16,6 +16,7 @@ export class CarbonOffset extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
+    this.set("name", Value.fromString(""));
     this.set("tokenAddress", Value.fromString(""));
     this.set("bridge", Value.fromString(""));
     this.set("registry", Value.fromString(""));
@@ -26,6 +27,7 @@ export class CarbonOffset extends Entity {
     this.set("projectID", Value.fromString(""));
     this.set("standard", Value.fromString(""));
     this.set("methodology", Value.fromString(""));
+    this.set("country", Value.fromString(""));
     this.set("region", Value.fromString(""));
     this.set("storageMethod", Value.fromString(""));
     this.set("method", Value.fromString(""));
@@ -37,6 +39,8 @@ export class CarbonOffset extends Entity {
     this.set("klimaRanking", Value.fromBigInt(BigInt.zero()));
     this.set("balanceBCT", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("balanceNCT", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("balanceUBO", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("balanceNBO", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("lastUpdate", Value.fromBigInt(BigInt.zero()));
   }
 
@@ -64,6 +68,15 @@ export class CarbonOffset extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get name(): string {
+    let value = this.get("name");
+    return value!.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
   }
 
   get tokenAddress(): string {
@@ -154,6 +167,15 @@ export class CarbonOffset extends Entity {
 
   set methodology(value: string) {
     this.set("methodology", Value.fromString(value));
+  }
+
+  get country(): string {
+    let value = this.get("country");
+    return value!.toString();
+  }
+
+  set country(value: string) {
+    this.set("country", Value.fromString(value));
   }
 
   get region(): string {
@@ -296,6 +318,24 @@ export class CarbonOffset extends Entity {
 
   set balanceNCT(value: BigDecimal) {
     this.set("balanceNCT", Value.fromBigDecimal(value));
+  }
+
+  get balanceUBO(): BigDecimal {
+    let value = this.get("balanceUBO");
+    return value!.toBigDecimal();
+  }
+
+  set balanceUBO(value: BigDecimal) {
+    this.set("balanceUBO", Value.fromBigDecimal(value));
+  }
+
+  get balanceNBO(): BigDecimal {
+    let value = this.get("balanceNBO");
+    return value!.toBigDecimal();
+  }
+
+  set balanceNBO(value: BigDecimal) {
+    this.set("balanceNBO", Value.fromBigDecimal(value));
   }
 
   get lastUpdate(): BigInt {
@@ -792,5 +832,139 @@ export class Transaction extends Entity {
 
   set gasPrice(value: BigInt) {
     this.set("gasPrice", Value.fromBigInt(value));
+  }
+}
+
+export class KlimaRetire extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("transaction", Value.fromString(""));
+    this.set("offset", Value.fromString(""));
+    this.set("pool", Value.fromString(""));
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("retiringAddress", Value.fromString(""));
+    this.set("beneficiary", Value.fromString(""));
+    this.set("beneficiaryAddress", Value.fromString(""));
+    this.set("retirementMessage", Value.fromString(""));
+    this.set("specific", Value.fromBoolean(false));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save KlimaRetire entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save KlimaRetire entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("KlimaRetire", id.toString(), this);
+    }
+  }
+
+  static load(id: string): KlimaRetire | null {
+    return changetype<KlimaRetire | null>(store.get("KlimaRetire", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get offset(): string {
+    let value = this.get("offset");
+    return value!.toString();
+  }
+
+  set offset(value: string) {
+    this.set("offset", Value.fromString(value));
+  }
+
+  get pool(): string {
+    let value = this.get("pool");
+    return value!.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get retiringAddress(): string {
+    let value = this.get("retiringAddress");
+    return value!.toString();
+  }
+
+  set retiringAddress(value: string) {
+    this.set("retiringAddress", Value.fromString(value));
+  }
+
+  get beneficiary(): string {
+    let value = this.get("beneficiary");
+    return value!.toString();
+  }
+
+  set beneficiary(value: string) {
+    this.set("beneficiary", Value.fromString(value));
+  }
+
+  get beneficiaryAddress(): string {
+    let value = this.get("beneficiaryAddress");
+    return value!.toString();
+  }
+
+  set beneficiaryAddress(value: string) {
+    this.set("beneficiaryAddress", Value.fromString(value));
+  }
+
+  get retirementMessage(): string {
+    let value = this.get("retirementMessage");
+    return value!.toString();
+  }
+
+  set retirementMessage(value: string) {
+    this.set("retirementMessage", Value.fromString(value));
+  }
+
+  get specific(): boolean {
+    let value = this.get("specific");
+    return value!.toBoolean();
+  }
+
+  set specific(value: boolean) {
+    this.set("specific", Value.fromBoolean(value));
   }
 }

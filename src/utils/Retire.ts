@@ -18,4 +18,4 @@ export function loadOrCreateRetire(offset: CarbonOffset, transaction: Transactio
     }
 
     return retire as Retire
-} 
+}

@@ -19,3 +19,17 @@ export class ToucanCarbonOffsets extends DataSourceTemplate {
     );
   }
 }
+
+export class C3ProjectToken extends DataSourceTemplate {
+  static create(address: Address): void {
+    DataSourceTemplate.create("C3ProjectToken", [address.toHex()]);
+  }
+
+  static createWithContext(address: Address, context: DataSourceContext): void {
+    DataSourceTemplate.createWithContext(
+      "C3ProjectToken",
+      [address.toHex()],
+      context
+    );
+  }
+}

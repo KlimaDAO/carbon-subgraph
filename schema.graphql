@@ -1,5 +1,6 @@
 type CarbonOffset @entity {
   id: ID!
+  name: String!
   tokenAddress: String!
   bridge: String!
   registry: String!
@@ -10,12 +11,13 @@ type CarbonOffset @entity {
   projectID: String!
   standard: String!
   methodology: String!
+  country: String!
   region: String!
   storageMethod: String!
   method: String!
   emissionType: String!
   category: String!
-  isCorsiaCompliant: Boolean!
+  isCorsiaCompliant: Boolean
   coBenefits: String!
   correspAdjustment: String!
   additionalCertification: String!
@@ -24,6 +26,8 @@ type CarbonOffset @entity {
   retirements: [Retire!] @derivedFrom(field: "offset")
   balanceBCT: BigDecimal!
   balanceNCT: BigDecimal!
+  balanceUBO: BigDecimal!
+  balanceNBO: BigDecimal!
   lastUpdate: BigInt!
 }
 
@@ -76,4 +80,18 @@ type Transaction @entity {
   value: BigInt!
   gasUsed: BigInt!
   gasPrice: BigInt!
+}
+
+type KlimaRetire @entity {
+  id: ID!
+  timestamp: BigInt!
+  transaction: Transaction!
+  offset: CarbonOffset!
+  pool: String!
+  amount: BigDecimal!
+  retiringAddress: String!
+  beneficiary: String!
+  beneficiaryAddress: String!
+  retirementMessage: String!
+  specific: Boolean!
 }
