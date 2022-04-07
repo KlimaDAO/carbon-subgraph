@@ -2,7 +2,7 @@ import { Address } from '@graphprotocol/graph-ts'
 
 import { Transfer, ToucanCarbonOffsets } from '../generated/templates/ToucanCarbonOffsets/ToucanCarbonOffsets'
 
-import { toDecimal } from './utils/Decimals'
+import { toDecimal } from '../../lib/utils/Decimals'
 import { loadOrCreateCarbonOffset } from './utils/CarbonOffsets'
 import { loadOrCreateTransaction } from './utils/Transactions'
 import { loadOrCreateBridge } from './utils/Bridge'

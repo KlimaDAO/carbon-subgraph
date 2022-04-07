@@ -20,7 +20,7 @@ dataSources:
         - ToucanCarbonOffsetsFactory
       abis:
         - name: ToucanCarbonOffsetsFactory
-          file: ./abis/ToucanCarbonOffsetsFactory.json
+          file: ../lib/abis/ToucanCarbonOffsetsFactory.json
       eventHandlers:
         - event: TokenCreated(uint256,address)
           handler: handleNewTCO2
@@ -40,7 +40,7 @@ dataSources:
         - BaseCarbonTonne
       abis:
         - name: BaseCarbonTonne
-          file: ./abis/BaseCarbonTonne.json
+          file: ../lib/abis/BaseCarbonTonne.json
       eventHandlers:
         - event: Deposited(address,uint256)
           handler: handleDeposit
@@ -62,7 +62,7 @@ dataSources:
         - NCT
       abis:
         - name: NCT
-          file: ./abis/BaseCarbonTonne.json
+          file: ../lib/abis/BaseCarbonTonne.json
       eventHandlers:
         - event: Deposited(address,uint256)
           handler: handleDeposit
@@ -84,7 +84,7 @@ dataSources:
         - MossCarbon
       abis:
         - name: ERC20
-          file: ./abis/ERC20.json
+          file: ../lib/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
@@ -104,9 +104,9 @@ dataSources:
         - C3ProjectTokenFactory
       abis:
         - name: C3ProjectTokenFactory
-          file: ./abis/C3ProjectTokenFactory.json
+          file: ../lib/abis/C3ProjectTokenFactory.json
         - name: C3ProjectToken
-          file: ./abis/C3ProjectToken.json
+          file: ../lib/abis/C3ProjectToken.json
       eventHandlers:
         - event: NewTokenProject(string,address)
           handler: handleNewC3T
@@ -126,7 +126,7 @@ dataSources:
         - UBO
       abis:
         - name: UBO
-          file: ./abis/UBO.json
+          file: ../lib/abis/UBO.json
       eventHandlers:
         - event: Deposited(address,uint256)
           handler: handleDeposit
@@ -148,7 +148,7 @@ dataSources:
         - NBO
       abis:
         - name: NBO
-          file: ./abis/NBO.json
+          file: ../lib/abis/NBO.json
       eventHandlers:
         - event: Deposited(address,uint256)
           handler: handleDeposit
@@ -171,7 +171,7 @@ dataSources:
         - KlimaRetire
       abis:
         - name: RetireToucanCarbon
-          file: ./abis/RetireToucanCarbon.json
+          file: ../lib/abis/RetireToucanCarbon.json
       eventHandlers:
         - event: ToucanRetired(indexed address,indexed address,string,string,indexed address,address,uint256)
           handler: handleToucanRetired
@@ -191,7 +191,7 @@ dataSources:
         - KlimaRetire
       abis:
         - name: RetireMossCarbon
-          file: ./abis/RetireMossCarbon.json
+          file: ../lib/abis/RetireMossCarbon.json
       eventHandlers:
         - event: MossRetired(indexed address,indexed address,string,string,indexed address,uint256)
           handler: handleMossRetired
@@ -209,9 +209,9 @@ templates:
         - ToucanCarbonOffsets
       abis:
         - name: ToucanCarbonOffsets
-          file: ./abis/ToucanCarbonOffsets.json
+          file: ../lib/abis/ToucanCarbonOffsets.json
         - name: ERC20
-          file: ./abis/ERC20.json
+          file: ../lib/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
@@ -229,9 +229,9 @@ templates:
         - C3ProjectToken
       abis:
         - name: C3ProjectToken
-          file: ./abis/C3ProjectToken.json
+          file: ../lib/abis/C3ProjectToken.json
         - name: ERC20
-          file: ./abis/ERC20.json
+          file: ../lib/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer

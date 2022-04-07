@@ -1,6 +1,6 @@
-import { Deposited, Redeemed } from "../generated/BaseCarbonTonne/BaseCarbonTonne"
+import { Deposited, Redeemed } from "../generated/NCT/NCT"
 import { loadOrCreateCarbonOffset } from "./utils/CarbonOffsets"
-import { toDecimal } from "./utils/Decimals"
+import { toDecimal } from "../../lib/utils/Decimals"
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateDeposit } from "./utils/Deposit"
 import { loadOrCreateRedeem } from "./utils/Redeem"
@@ -12,13 +12,13 @@ export function handleDeposit(event: Deposited): void {
     let deposit = loadOrCreateDeposit(offset, transaction)
 
     deposit.depositor = transaction.from.toHexString()
-    deposit.pool = '0x2F800Db0fdb5223b3C3f354886d907A671414A7F'
+    deposit.pool = '0xD838290e877E0188a4A44700463419ED96c16107'
     deposit.value = toDecimal(event.params.amount)
 
-    offset.balanceBCT = offset.balanceBCT.plus(toDecimal(event.params.amount, 18))
+    offset.balanceNCT = offset.balanceNCT.plus(toDecimal(event.params.amount, 18))
 
-    deposit.save()
     offset.save()
+    deposit.save()
 }
 
 export function handleRedeem(event: Redeemed): void {
@@ -27,10 +27,10 @@ export function handleRedeem(event: Redeemed): void {
     let redeem = loadOrCreateRedeem(offset, transaction)
 
     redeem.redeemer = transaction.from.toHexString()
-    redeem.pool = '0x2F800Db0fdb5223b3C3f354886d907A671414A7F'
+    redeem.pool = '0xD838290e877E0188a4A44700463419ED96c16107'
     redeem.value = toDecimal(event.params.amount)
 
-    offset.balanceBCT = offset.balanceBCT.minus(toDecimal(event.params.amount, 18))
+    offset.balanceNCT = offset.balanceNCT.minus(toDecimal(event.params.amount, 18))
 
     offset.save()
     redeem.save()
