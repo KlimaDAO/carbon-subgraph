@@ -1,0 +1,26 @@
+specVersion: 0.0.2
+description: Ethereum Bridged Carbon
+repository: https://github.com/originalpkbims/ethereum-carbon-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: MossCarbon
+    network: mainnet
+    source:
+      address: '0xfC98e825A2264D890F9a1e68ed50E1526abCcacD'
+      abi: ERC20
+      startBlock: 10959600
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/MossCarbon.ts
+      entities:
+        - MossCarbon
+      abis:
+        - name: ERC20
+          file: ../lib/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer

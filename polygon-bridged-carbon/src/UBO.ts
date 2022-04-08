@@ -1,6 +1,6 @@
-import { Deposited, Redeemed } from "../generated/NBO/NBO"
+import { Deposited, Redeemed } from "../generated/UBO/UBO"
 import { loadOrCreateCarbonOffset } from "./utils/CarbonOffsets"
-import { toDecimal } from "./utils/Decimals"
+import { toDecimal } from "../../lib/utils/Decimals"
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateDeposit } from "./utils/Deposit"
 import { loadOrCreateRedeem } from "./utils/Redeem"
@@ -15,7 +15,7 @@ export function handleDeposit(event: Deposited): void {
     deposit.pool = ''
     deposit.value = toDecimal(event.params.amount)
 
-    offset.balanceNBO = offset.balanceNBO.plus(toDecimal(event.params.amount, 18))
+    offset.balanceUBO = offset.balanceUBO.plus(toDecimal(event.params.amount, 18))
 
     offset.save()
     deposit.save()
@@ -30,7 +30,7 @@ export function handleRedeem(event: Redeemed): void {
     redeem.pool = ''
     redeem.value = toDecimal(event.params.amount)
 
-    offset.balanceNBO = offset.balanceNBO.minus(toDecimal(event.params.amount, 18))
+    offset.balanceUBO = offset.balanceUBO.minus(toDecimal(event.params.amount, 18))
 
     offset.save()
     redeem.save()

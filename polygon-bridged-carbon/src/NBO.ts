@@ -1,6 +1,6 @@
-import { Deposited, Redeemed } from "../generated/NCT/NCT"
+import { Deposited, Redeemed } from "../generated/NBO/NBO"
 import { loadOrCreateCarbonOffset } from "./utils/CarbonOffsets"
-import { toDecimal } from "./utils/Decimals"
+import { toDecimal } from "../../lib/utils/Decimals"
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateDeposit } from "./utils/Deposit"
 import { loadOrCreateRedeem } from "./utils/Redeem"
@@ -8,14 +8,14 @@ import { loadOrCreateRedeem } from "./utils/Redeem"
 export function handleDeposit(event: Deposited): void {
 
     let transaction = loadOrCreateTransaction(event.transaction, event.block)
-    let offset = loadOrCreateCarbonOffset(transaction, event.params.erc20Addr, 'Toucan', 'Verra')
+    let offset = loadOrCreateCarbonOffset(transaction, event.params.tokenERC2OAddress, 'C3', '')
     let deposit = loadOrCreateDeposit(offset, transaction)
 
     deposit.depositor = transaction.from.toHexString()
-    deposit.pool = '0xD838290e877E0188a4A44700463419ED96c16107'
+    deposit.pool = ''
     deposit.value = toDecimal(event.params.amount)
 
-    offset.balanceNCT = offset.balanceNCT.plus(toDecimal(event.params.amount, 18))
+    offset.balanceNBO = offset.balanceNBO.plus(toDecimal(event.params.amount, 18))
 
     offset.save()
     deposit.save()
@@ -23,14 +23,14 @@ export function handleDeposit(event: Deposited): void {
 
 export function handleRedeem(event: Redeemed): void {
     let transaction = loadOrCreateTransaction(event.transaction, event.block)
-    let offset = loadOrCreateCarbonOffset(transaction, event.params.erc20, 'Toucan', 'Verra')
+    let offset = loadOrCreateCarbonOffset(transaction, event.params.tokenERC2OAddress, 'C3', '')
     let redeem = loadOrCreateRedeem(offset, transaction)
 
     redeem.redeemer = transaction.from.toHexString()
-    redeem.pool = '0xD838290e877E0188a4A44700463419ED96c16107'
+    redeem.pool = ''
     redeem.value = toDecimal(event.params.amount)
 
-    offset.balanceNCT = offset.balanceNCT.minus(toDecimal(event.params.amount, 18))
+    offset.balanceNBO = offset.balanceNBO.minus(toDecimal(event.params.amount, 18))
 
     offset.save()
     redeem.save()

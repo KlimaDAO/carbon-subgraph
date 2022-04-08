@@ -1,7 +1,7 @@
 import { MossRetired } from "../generated/RetireMossCarbon/RetireMossCarbon"
 import { ToucanRetired } from "../generated/RetireToucanCarbon/RetireToucanCarbon"
 import { loadOrCreateCarbonOffset } from "./utils/CarbonOffsets"
-import { toDecimal } from "./utils/Decimals"
+import { toDecimal } from "../../lib/utils/Decimals"
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateKlimaRetire } from "./utils/KlimaRetire"
 

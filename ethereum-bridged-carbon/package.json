@@ -1,0 +1,17 @@
+{
+  "name": "ethereum-bridged-carbon",
+  "repository": "https://github.com/klimadao/carbon-subgraph",
+  "license": "MIT",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ klimadao/ethereum-bridged-carbon",
+    "create-local": "graph create --node http://localhost:8020/ klimadao/ethereum-bridged-carbon",
+    "remove-local": "graph remove --node http://localhost:8020/ klimadao/ethereum-bridged-carbon",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 klimadao/ethereum-bridged-carbon"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.26.0",
+    "@graphprotocol/graph-ts": "0.24.1"
+  }
+}
