@@ -12,7 +12,7 @@ export function handleDeposit(event: Deposited): void {
     let deposit = loadOrCreateDeposit(offset, transaction)
 
     deposit.depositor = transaction.from.toHexString()
-    deposit.pool = ''
+    deposit.pool = '0x2B3eCb0991AF0498ECE9135bcD04013d7993110c'
     deposit.value = toDecimal(event.params.amount)
 
     offset.balanceUBO = offset.balanceUBO.plus(toDecimal(event.params.amount, 18))
@@ -27,7 +27,7 @@ export function handleRedeem(event: Redeemed): void {
     let redeem = loadOrCreateRedeem(offset, transaction)
 
     redeem.redeemer = transaction.from.toHexString()
-    redeem.pool = ''
+    redeem.pool = '0x2B3eCb0991AF0498ECE9135bcD04013d7993110c'
     redeem.value = toDecimal(event.params.amount)
 
     offset.balanceUBO = offset.balanceUBO.minus(toDecimal(event.params.amount, 18))
