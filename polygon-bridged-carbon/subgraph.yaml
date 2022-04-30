@@ -172,6 +172,8 @@ dataSources:
       abis:
         - name: RetireToucanCarbon
           file: ../lib/abis/RetireToucanCarbon.json
+        - name: KlimaCarbonRetirements
+          file: ../lib/abis/KlimaCarbonRetirements.json
       eventHandlers:
         - event: ToucanRetired(indexed address,indexed address,string,string,indexed address,address,uint256)
           handler: handleToucanRetired
@@ -192,9 +194,33 @@ dataSources:
       abis:
         - name: RetireMossCarbon
           file: ../lib/abis/RetireMossCarbon.json
+        - name: KlimaCarbonRetirements
+          file: ../lib/abis/KlimaCarbonRetirements.json
       eventHandlers:
         - event: MossRetired(indexed address,indexed address,string,string,indexed address,uint256)
           handler: handleMossRetired
+  - kind: ethereum/contract
+    name: RetireC3Carbon
+    network: matic
+    source:
+      address: '0x933AF8c652c696FB0969Eb85DDd111edb2b4E057'
+      abi: RetireC3Carbon
+      startBlock: 27175005
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/KlimaRetirementAggregator.ts
+      entities:
+        - KlimaRetire
+      abis:
+        - name: RetireC3Carbon
+          file: ../lib/abis/RetireC3Carbon.json
+        - name: KlimaCarbonRetirements
+          file: ../lib/abis/KlimaCarbonRetirements.json
+      eventHandlers:
+        - event: C3Retired(indexed address,indexed address,string,string,indexed address,address,uint256)
+          handler: handleC3Retired
 templates:
   - name: ToucanCarbonOffsets
     kind: ethereum/contract
