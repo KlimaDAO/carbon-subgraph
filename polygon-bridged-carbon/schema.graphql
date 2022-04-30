@@ -86,6 +86,7 @@ type KlimaRetire @entity {
   id: ID!
   timestamp: BigInt!
   transaction: Transaction!
+  index: BigInt!
   offset: CarbonOffset!
   pool: String!
   amount: BigDecimal!

@@ -842,6 +842,7 @@ export class KlimaRetire extends Entity {
 
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("transaction", Value.fromString(""));
+    this.set("index", Value.fromBigInt(BigInt.zero()));
     this.set("offset", Value.fromString(""));
     this.set("pool", Value.fromString(""));
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
@@ -894,6 +895,15 @@ export class KlimaRetire extends Entity {
 
   set transaction(value: string) {
     this.set("transaction", Value.fromString(value));
+  }
+
+  get index(): BigInt {
+    let value = this.get("index");
+    return value!.toBigInt();
+  }
+
+  set index(value: BigInt) {
+    this.set("index", Value.fromBigInt(value));
   }
 
   get offset(): string {
