@@ -89,10 +89,22 @@ type KlimaRetire @entity {
   index: BigInt!
   offset: CarbonOffset!
   pool: String!
+  token: String!
   amount: BigDecimal!
+  feeAmount: BigDecimal!
   retiringAddress: String!
   beneficiary: String!
   beneficiaryAddress: String!
   retirementMessage: String!
   specific: Boolean!
+}
+
+type DailyRetirement @entity {
+  id: ID!
+  timestamp: BigInt!
+  pool: String!
+  token: String!
+  offset: CarbonOffset!
+  amount: BigDecimal!
+  feeAmount: BigDecimal!
 }

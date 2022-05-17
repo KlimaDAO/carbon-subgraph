@@ -845,7 +845,9 @@ export class KlimaRetire extends Entity {
     this.set("index", Value.fromBigInt(BigInt.zero()));
     this.set("offset", Value.fromString(""));
     this.set("pool", Value.fromString(""));
+    this.set("token", Value.fromString(""));
     this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("feeAmount", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("retiringAddress", Value.fromString(""));
     this.set("beneficiary", Value.fromString(""));
     this.set("beneficiaryAddress", Value.fromString(""));
@@ -924,6 +926,15 @@ export class KlimaRetire extends Entity {
     this.set("pool", Value.fromString(value));
   }
 
+  get token(): string {
+    let value = this.get("token");
+    return value!.toString();
+  }
+
+  set token(value: string) {
+    this.set("token", Value.fromString(value));
+  }
+
   get amount(): BigDecimal {
     let value = this.get("amount");
     return value!.toBigDecimal();
@@ -931,6 +942,15 @@ export class KlimaRetire extends Entity {
 
   set amount(value: BigDecimal) {
     this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get feeAmount(): BigDecimal {
+    let value = this.get("feeAmount");
+    return value!.toBigDecimal();
+  }
+
+  set feeAmount(value: BigDecimal) {
+    this.set("feeAmount", Value.fromBigDecimal(value));
   }
 
   get retiringAddress(): string {
@@ -976,5 +996,99 @@ export class KlimaRetire extends Entity {
 
   set specific(value: boolean) {
     this.set("specific", Value.fromBoolean(value));
+  }
+}
+
+export class DailyRetirement extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("pool", Value.fromString(""));
+    this.set("token", Value.fromString(""));
+    this.set("offset", Value.fromString(""));
+    this.set("amount", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("feeAmount", Value.fromBigDecimal(BigDecimal.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save DailyRetirement entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save DailyRetirement entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("DailyRetirement", id.toString(), this);
+    }
+  }
+
+  static load(id: string): DailyRetirement | null {
+    return changetype<DailyRetirement | null>(store.get("DailyRetirement", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get pool(): string {
+    let value = this.get("pool");
+    return value!.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
+  }
+
+  get token(): string {
+    let value = this.get("token");
+    return value!.toString();
+  }
+
+  set token(value: string) {
+    this.set("token", Value.fromString(value));
+  }
+
+  get offset(): string {
+    let value = this.get("offset");
+    return value!.toString();
+  }
+
+  set offset(value: string) {
+    this.set("offset", Value.fromString(value));
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get feeAmount(): BigDecimal {
+    let value = this.get("feeAmount");
+    return value!.toBigDecimal();
+  }
+
+  set feeAmount(value: BigDecimal) {
+    this.set("feeAmount", Value.fromBigDecimal(value));
   }
 }
