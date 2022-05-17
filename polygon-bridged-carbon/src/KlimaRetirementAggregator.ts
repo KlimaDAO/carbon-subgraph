@@ -63,7 +63,7 @@ export function handleToucanRetired(event: ToucanRetired): void {
     retire.pool = event.params.carbonPool.toHexString()
     retire.token = token
     retire.amount = toDecimal(event.params.retiredAmount)
-    retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString("100")))
+    retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString("1000")))
 
     const dailyRetirement = generateDailyRetirement(retire)
     dailyRetirement.save()
@@ -92,7 +92,7 @@ export function handleC3Retired(event: C3Retired): void {
     retire.pool = event.params.carbonPool.toHexString()
     retire.token = token
     retire.amount = toDecimal(event.params.retiredAmount)
-    retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString("100")))
+    retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString("1000")))
 
     const dailyRetirement = generateDailyRetirement(retire)
     dailyRetirement.save()
