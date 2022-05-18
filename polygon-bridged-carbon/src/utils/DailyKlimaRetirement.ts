@@ -1,12 +1,12 @@
 import { BigDecimal, BigInt } from "@graphprotocol/graph-ts";
-import { DailyRetirement } from "../../generated/schema";
+import { DailyKlimaRetirement } from "../../generated/schema";
 
 
-export function loadOrCreateDailyRetirement(id: string): DailyRetirement {
+export function loadOrCreateDailyKlimaRetirement(id: string): DailyKlimaRetirement {
 
-    let retire = DailyRetirement.load(id)
+    let retire = DailyKlimaRetirement.load(id)
     if (retire == null) {
-        retire = new DailyRetirement(id)
+        retire = new DailyKlimaRetirement(id)
         retire.timestamp = BigInt.zero()
         retire.pool = ""
         retire.offset = ""
@@ -14,5 +14,5 @@ export function loadOrCreateDailyRetirement(id: string): DailyRetirement {
         retire.feeAmount = BigDecimal.fromString("0")
     }
 
-    return retire as DailyRetirement
+    return retire as DailyKlimaRetirement
 }

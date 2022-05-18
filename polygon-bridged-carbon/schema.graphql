@@ -99,7 +99,7 @@ type KlimaRetire @entity {
   specific: Boolean!
 }
 
-type DailyRetirement @entity {
+type DailyKlimaRetirement @entity {
   id: ID!
   timestamp: BigInt!
   pool: String!

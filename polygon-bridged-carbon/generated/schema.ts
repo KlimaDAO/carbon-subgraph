@@ -999,7 +999,7 @@ export class KlimaRetire extends Entity {
   }
 }
 
-export class DailyRetirement extends Entity {
+export class DailyKlimaRetirement extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -1014,19 +1014,21 @@ export class DailyRetirement extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save DailyRetirement entity without an ID");
+    assert(id != null, "Cannot save DailyKlimaRetirement entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save DailyRetirement entity with non-string ID. " +
+        "Cannot save DailyKlimaRetirement entity with non-string ID. " +
           'Considering using .toHex() to convert the "id" to a string.'
       );
-      store.set("DailyRetirement", id.toString(), this);
+      store.set("DailyKlimaRetirement", id.toString(), this);
     }
   }
 
-  static load(id: string): DailyRetirement | null {
-    return changetype<DailyRetirement | null>(store.get("DailyRetirement", id));
+  static load(id: string): DailyKlimaRetirement | null {
+    return changetype<DailyKlimaRetirement | null>(
+      store.get("DailyKlimaRetirement", id)
+    );
   }
 
   get id(): string {

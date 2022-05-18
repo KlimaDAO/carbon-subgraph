@@ -1,12 +1,12 @@
 import { MossRetired, RetireMossCarbon } from "../generated/RetireMossCarbon/RetireMossCarbon"
 import { RetireToucanCarbon, ToucanRetired } from "../generated/RetireToucanCarbon/RetireToucanCarbon"
 import { C3Retired, RetireC3Carbon } from "../generated/RetireC3Carbon/RetireC3Carbon"
-import { KlimaRetire, DailyRetirement } from "../generated/schema";
+import { KlimaRetire, DailyKlimaRetirement } from "../generated/schema";
 import * as constants from "../../lib/utils/Constants";
 
 import { KlimaCarbonRetirements } from "../generated/RetireC3Carbon/KlimaCarbonRetirements"
 import { loadOrCreateCarbonOffset } from "./utils/CarbonOffsets"
-import { loadOrCreateDailyRetirement } from "./utils/DailyRetirement"
+import { loadOrCreateDailyKlimaRetirement as loadOrCreateDailyKlimaRetirement } from "./utils/DailyKlimaRetirement"
 import { getTokenFromPoolAddress } from "./utils/Token"
 import { toDecimal } from "../../lib/utils/Decimals"
 import { dayFromTimestamp } from "../../lib/utils/Dates"
@@ -36,7 +36,7 @@ export function handleMossRetired(event: MossRetired): void {
     retire.amount = toDecimal(event.params.retiredAmount)
     retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString("1000")))
 
-    const dailyRetirement = generateDailyRetirement(retire)
+    const dailyRetirement = generateDailyKlimaRetirement(retire)
     dailyRetirement.save()
     // TODO: add separate handler for specific retirements
     // retire.specific = true
@@ -65,7 +65,7 @@ export function handleToucanRetired(event: ToucanRetired): void {
     retire.amount = toDecimal(event.params.retiredAmount)
     retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString("1000")))
 
-    const dailyRetirement = generateDailyRetirement(retire)
+    const dailyRetirement = generateDailyKlimaRetirement(retire)
     dailyRetirement.save()
     // TODO: add separate handler for specific retirements
     // retire.specific = true
@@ -94,26 +94,26 @@ export function handleC3Retired(event: C3Retired): void {
     retire.amount = toDecimal(event.params.retiredAmount)
     retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString("1000")))
 
-    const dailyRetirement = generateDailyRetirement(retire)
-    dailyRetirement.save()
+    const dailyKlimaRetirement = generateDailyKlimaRetirement(retire)
+    dailyKlimaRetirement.save()
     // TODO: add separate handler for specific retirements
     // retire.specific = true
 
     retire.save()
 }
 
-function generateDailyRetirement(klimaRetire: KlimaRetire): DailyRetirement {
+function generateDailyKlimaRetirement(klimaRetire: KlimaRetire): DailyKlimaRetirement {
 
     const dayTimestamp = dayFromTimestamp(klimaRetire.timestamp)
     const id = dayTimestamp + klimaRetire.token
 
-    const dailyRetirement = loadOrCreateDailyRetirement(id)
-    dailyRetirement.amount = dailyRetirement.amount.plus(klimaRetire.amount)
-    dailyRetirement.feeAmount = dailyRetirement.feeAmount.plus(klimaRetire.feeAmount)
-    dailyRetirement.offset = klimaRetire.offset
-    dailyRetirement.pool = klimaRetire.pool
-    dailyRetirement.token = klimaRetire.token
-    dailyRetirement.timestamp = BigInt.fromString(dayTimestamp)
+    const dailyKlimaRetirement = loadOrCreateDailyKlimaRetirement(id)
+    dailyKlimaRetirement.amount = dailyKlimaRetirement.amount.plus(klimaRetire.amount)
+    dailyKlimaRetirement.feeAmount = dailyKlimaRetirement.feeAmount.plus(klimaRetire.feeAmount)
+    dailyKlimaRetirement.offset = klimaRetire.offset
+    dailyKlimaRetirement.pool = klimaRetire.pool
+    dailyKlimaRetirement.token = klimaRetire.token
+    dailyKlimaRetirement.timestamp = BigInt.fromString(dayTimestamp)
 
-    return dailyRetirement
+    return dailyKlimaRetirement
 }
