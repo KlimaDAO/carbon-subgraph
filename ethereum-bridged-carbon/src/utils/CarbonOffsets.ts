@@ -17,6 +17,8 @@ export function loadOrCreateCarbonOffset(transaction: Transaction, token: Addres
             carbonOffset.totalBridged = BigDecimal.fromString('0')
             carbonOffset.totalRetired = BigDecimal.fromString('0')
             carbonOffset.currentSupply = BigDecimal.fromString('0')
+            carbonOffset.name = ''
+            carbonOffset.country = ''
             carbonOffset.vintage = ''
             carbonOffset.projectID = ''
             carbonOffset.standard = ''

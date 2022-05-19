@@ -47,6 +47,20 @@ type Retire @entity {
   retiree: String!
 }
 
+type Batch @entity {
+  id: ID!
+  serialNumber: String!
+  projectID: BigInt!
+  vintage: String!
+  creditType: String!
+  value: BigDecimal!
+  tokenAddress: String!
+  broker: String!
+  timestamp: BigInt!
+  originaltx: String!
+  transaction: Transaction!
+}
+
 type Transaction @entity {
   id: ID!
   timestamp: BigInt!
@@ -55,6 +69,5 @@ type Transaction @entity {
   from: Bytes!
   to: Bytes
   value: BigInt!
-  gasUsed: BigInt!
   gasPrice: BigInt!
 }
