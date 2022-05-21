@@ -8,6 +8,8 @@ import { loadOrCreateTransaction } from './utils/Transactions'
 import { loadOrCreateBridge } from './utils/Bridge'
 import { Bridge } from '../generated/schema'
 import { loadOrCreateRetire } from './utils/Retire'
+import { TCO2 } from './utils/underlying_token/impl/TCO2'
+import { CarbonMetricUtils } from './utils/CarbonMetrics'
 
 export function handleTransfer(event: Transfer): void {
 
@@ -42,10 +44,12 @@ export function handleTransfer(event: Transfer): void {
 
         carbonOffset.totalRetired = carbonOffset.totalRetired.plus(toDecimal(event.params.value, 18))
         //carbonOffset.retirements.push(retire.id)
+        CarbonMetricUtils.updateUnderlyingTokenRetirements(new TCO2(), event.block.timestamp, event.params.value)
     }
 
     carbonOffset.currentSupply = toDecimal(offsetERC20.totalSupply(), 18)
     carbonOffset.lastUpdate = transaction.timestamp
 
     carbonOffset.save()
+
 }

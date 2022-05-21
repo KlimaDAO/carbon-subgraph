@@ -724,7 +724,6 @@ export class Transaction extends Entity {
     this.set("blockHash", Value.fromBytes(Bytes.empty()));
     this.set("from", Value.fromBytes(Bytes.empty()));
     this.set("value", Value.fromBigInt(BigInt.zero()));
-    this.set("gasUsed", Value.fromBigInt(BigInt.zero()));
     this.set("gasPrice", Value.fromBigInt(BigInt.zero()));
   }
 
@@ -814,15 +813,6 @@ export class Transaction extends Entity {
 
   set value(value: BigInt) {
     this.set("value", Value.fromBigInt(value));
-  }
-
-  get gasUsed(): BigInt {
-    let value = this.get("gasUsed");
-    return value!.toBigInt();
-  }
-
-  set gasUsed(value: BigInt) {
-    this.set("gasUsed", Value.fromBigInt(value));
   }
 
   get gasPrice(): BigInt {
@@ -1092,5 +1082,209 @@ export class DailyKlimaRetirement extends Entity {
 
   set feeAmount(value: BigDecimal) {
     this.set("feeAmount", Value.fromBigDecimal(value));
+  }
+}
+
+export class CarbonMetric extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("bctSupply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("nctSupply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("mco2Supply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("uboSupply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("nboSupply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalCarbonSupply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("tco2Retired", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("mco2Retired", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("c3tRetired", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalRetirements", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("bctKlimaRetired", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("nctKlimaRetired", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("mco2KlimaRetired", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("uboKlimaRetired", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("nboKlimaRetired", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalKlimaRetirements", Value.fromBigDecimal(BigDecimal.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save CarbonMetric entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save CarbonMetric entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("CarbonMetric", id.toString(), this);
+    }
+  }
+
+  static load(id: string): CarbonMetric | null {
+    return changetype<CarbonMetric | null>(store.get("CarbonMetric", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get bctSupply(): BigDecimal {
+    let value = this.get("bctSupply");
+    return value!.toBigDecimal();
+  }
+
+  set bctSupply(value: BigDecimal) {
+    this.set("bctSupply", Value.fromBigDecimal(value));
+  }
+
+  get nctSupply(): BigDecimal {
+    let value = this.get("nctSupply");
+    return value!.toBigDecimal();
+  }
+
+  set nctSupply(value: BigDecimal) {
+    this.set("nctSupply", Value.fromBigDecimal(value));
+  }
+
+  get mco2Supply(): BigDecimal {
+    let value = this.get("mco2Supply");
+    return value!.toBigDecimal();
+  }
+
+  set mco2Supply(value: BigDecimal) {
+    this.set("mco2Supply", Value.fromBigDecimal(value));
+  }
+
+  get uboSupply(): BigDecimal {
+    let value = this.get("uboSupply");
+    return value!.toBigDecimal();
+  }
+
+  set uboSupply(value: BigDecimal) {
+    this.set("uboSupply", Value.fromBigDecimal(value));
+  }
+
+  get nboSupply(): BigDecimal {
+    let value = this.get("nboSupply");
+    return value!.toBigDecimal();
+  }
+
+  set nboSupply(value: BigDecimal) {
+    this.set("nboSupply", Value.fromBigDecimal(value));
+  }
+
+  get totalCarbonSupply(): BigDecimal {
+    let value = this.get("totalCarbonSupply");
+    return value!.toBigDecimal();
+  }
+
+  set totalCarbonSupply(value: BigDecimal) {
+    this.set("totalCarbonSupply", Value.fromBigDecimal(value));
+  }
+
+  get tco2Retired(): BigDecimal {
+    let value = this.get("tco2Retired");
+    return value!.toBigDecimal();
+  }
+
+  set tco2Retired(value: BigDecimal) {
+    this.set("tco2Retired", Value.fromBigDecimal(value));
+  }
+
+  get mco2Retired(): BigDecimal {
+    let value = this.get("mco2Retired");
+    return value!.toBigDecimal();
+  }
+
+  set mco2Retired(value: BigDecimal) {
+    this.set("mco2Retired", Value.fromBigDecimal(value));
+  }
+
+  get c3tRetired(): BigDecimal {
+    let value = this.get("c3tRetired");
+    return value!.toBigDecimal();
+  }
+
+  set c3tRetired(value: BigDecimal) {
+    this.set("c3tRetired", Value.fromBigDecimal(value));
+  }
+
+  get totalRetirements(): BigDecimal {
+    let value = this.get("totalRetirements");
+    return value!.toBigDecimal();
+  }
+
+  set totalRetirements(value: BigDecimal) {
+    this.set("totalRetirements", Value.fromBigDecimal(value));
+  }
+
+  get bctKlimaRetired(): BigDecimal {
+    let value = this.get("bctKlimaRetired");
+    return value!.toBigDecimal();
+  }
+
+  set bctKlimaRetired(value: BigDecimal) {
+    this.set("bctKlimaRetired", Value.fromBigDecimal(value));
+  }
+
+  get nctKlimaRetired(): BigDecimal {
+    let value = this.get("nctKlimaRetired");
+    return value!.toBigDecimal();
+  }
+
+  set nctKlimaRetired(value: BigDecimal) {
+    this.set("nctKlimaRetired", Value.fromBigDecimal(value));
+  }
+
+  get mco2KlimaRetired(): BigDecimal {
+    let value = this.get("mco2KlimaRetired");
+    return value!.toBigDecimal();
+  }
+
+  set mco2KlimaRetired(value: BigDecimal) {
+    this.set("mco2KlimaRetired", Value.fromBigDecimal(value));
+  }
+
+  get uboKlimaRetired(): BigDecimal {
+    let value = this.get("uboKlimaRetired");
+    return value!.toBigDecimal();
+  }
+
+  set uboKlimaRetired(value: BigDecimal) {
+    this.set("uboKlimaRetired", Value.fromBigDecimal(value));
+  }
+
+  get nboKlimaRetired(): BigDecimal {
+    let value = this.get("nboKlimaRetired");
+    return value!.toBigDecimal();
+  }
+
+  set nboKlimaRetired(value: BigDecimal) {
+    this.set("nboKlimaRetired", Value.fromBigDecimal(value));
+  }
+
+  get totalKlimaRetirements(): BigDecimal {
+    let value = this.get("totalKlimaRetirements");
+    return value!.toBigDecimal();
+  }
+
+  set totalKlimaRetirements(value: BigDecimal) {
+    this.set("totalKlimaRetirements", Value.fromBigDecimal(value));
   }
 }

@@ -13,6 +13,9 @@ import { dayFromTimestamp } from "../../lib/utils/Dates"
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateKlimaRetire } from "./utils/KlimaRetire"
 import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts"
+import { CarbonMetricUtils } from "./utils/CarbonMetrics"
+import { MCO2 } from "./utils/carbon_token/impl/MCO2"
+import { CarbonTokenFactory } from "./utils/carbon_token/CarbonTokenFactory"
 
 export function handleMossRetired(event: MossRetired): void {
 
@@ -42,6 +45,8 @@ export function handleMossRetired(event: MossRetired): void {
     // retire.specific = true
 
     retire.save()
+
+    updateKlimaRetirementProtocolMetrics(retire.pool, event.block.timestamp, event.params.retiredAmount)
 }
 
 export function handleToucanRetired(event: ToucanRetired): void {
@@ -71,6 +76,8 @@ export function handleToucanRetired(event: ToucanRetired): void {
     // retire.specific = true
 
     retire.save()
+
+    updateKlimaRetirementProtocolMetrics(retire.pool, event.block.timestamp, event.params.retiredAmount)
 }
 
 export function handleC3Retired(event: C3Retired): void {
@@ -99,6 +106,8 @@ export function handleC3Retired(event: C3Retired): void {
     // TODO: add separate handler for specific retirements
     // retire.specific = true
 
+    updateKlimaRetirementProtocolMetrics(retire.pool, event.block.timestamp, event.params.retiredAmount)
+
     retire.save()
 }
 
@@ -116,4 +125,8 @@ function generateDailyKlimaRetirement(klimaRetire: KlimaRetire): DailyKlimaRetir
     dailyKlimaRetirement.timestamp = BigInt.fromString(dayTimestamp)
 
     return dailyKlimaRetirement
+}
+function updateKlimaRetirementProtocolMetrics(pool: string, timestamp: BigInt, retiredAmount: BigInt): void {
+    const token = new CarbonTokenFactory().getTokenForAddress(Address.fromString(pool))
+    CarbonMetricUtils.updateKlimaRetirements(token, timestamp, retiredAmount)
 }
