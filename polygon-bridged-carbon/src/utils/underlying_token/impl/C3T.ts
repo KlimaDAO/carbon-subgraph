@@ -9,10 +9,10 @@ export class C3T implements IUnderlyingToken {
         return 18
     }
 
-    returnUpdatedRetirementMetrics(carbonMetricsDTO: CarbonMetric, amount: BigInt): CarbonMetric {
-        carbonMetricsDTO.c3tRetired = carbonMetricsDTO.c3tRetired.plus(toDecimal(amount, this.getDecimals()))
-        carbonMetricsDTO.totalRetirements = carbonMetricsDTO.totalRetirements.plus(toDecimal(amount, this.getDecimals()))
+    returnUpdatedRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
+        carbonMetrics.c3tRetired = carbonMetrics.c3tRetired.plus(toDecimal(amount, this.getDecimals()))
+        carbonMetrics.totalRetirements = carbonMetrics.totalRetirements.plus(toDecimal(amount, this.getDecimals()))
 
-        return carbonMetricsDTO
+        return carbonMetrics
     }
 }

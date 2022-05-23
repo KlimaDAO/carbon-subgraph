@@ -13,3 +13,6 @@
 
  // Klima Retirement Contracts
  export const KLIMA_CARBON_RETIREMENTS_CONTRACT = '0xac298cd34559b9acfaedea8344a977eceff1c0fd';
+
+ //Metrics init timestamp - 10th of Oct 2021 (Day of BCT ERC20 contract creation)
+ export const METRICS_INIT_TIMESTAMP = '1633824000'

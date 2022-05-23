@@ -62,24 +62,10 @@ export class CarbonMetricUtils {
   private static createAndReturnEmptyCarbonMetrics(id: string): CarbonMetric {
     let carbonMetrics = new CarbonMetric(id);
     carbonMetrics.timestamp = BigInt.zero();
-    carbonMetrics.bctSupply = BigDecimal.zero();
-    carbonMetrics.nctSupply = BigDecimal.zero();
     carbonMetrics.mco2Supply = BigDecimal.zero();
-    carbonMetrics.uboSupply = BigDecimal.zero();
-    carbonMetrics.nboSupply = BigDecimal.zero();
-    carbonMetrics.totalCarbonSupply = BigDecimal.zero();
-  
-    carbonMetrics.tco2Retired = BigDecimal.zero();
+    carbonMetrics.totalCarbonSupply = BigDecimal.zero(); 
     carbonMetrics.mco2Retired = BigDecimal.zero();
-    carbonMetrics.c3tRetired = BigDecimal.zero();
-  
     carbonMetrics.totalRetirements = BigDecimal.zero();
-    carbonMetrics.bctKlimaRetired = BigDecimal.zero();
-    carbonMetrics.nctKlimaRetired = BigDecimal.zero();
-    carbonMetrics.mco2KlimaRetired = BigDecimal.zero();
-    carbonMetrics.uboKlimaRetired = BigDecimal.zero();
-    carbonMetrics.nboKlimaRetired = BigDecimal.zero();
-    carbonMetrics.totalKlimaRetirements = BigDecimal.zero();
     carbonMetrics.save();
   
     return carbonMetrics;

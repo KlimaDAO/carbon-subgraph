@@ -9,10 +9,10 @@ export class TCO2 implements IUnderlyingToken {
         return 18
     }
 
-    returnUpdatedRetirementMetrics(carbonMetricsDTO: CarbonMetric, amount: BigInt): CarbonMetric {
-        carbonMetricsDTO.tco2Retired = carbonMetricsDTO.tco2Retired.plus(toDecimal(amount, this.getDecimals()))
-        carbonMetricsDTO.totalRetirements = carbonMetricsDTO.totalRetirements.plus(toDecimal(amount, this.getDecimals()))
+    returnUpdatedRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
+        carbonMetrics.tco2Retired = carbonMetrics.tco2Retired.plus(toDecimal(amount, this.getDecimals()))
+        carbonMetrics.totalRetirements = carbonMetrics.totalRetirements.plus(toDecimal(amount, this.getDecimals()))
 
-        return carbonMetricsDTO
+        return carbonMetrics
     }
 }
