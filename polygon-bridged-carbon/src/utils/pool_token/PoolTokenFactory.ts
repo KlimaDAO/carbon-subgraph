@@ -1,17 +1,17 @@
 import { Address } from "@graphprotocol/graph-ts";
 
 import * as constants from "../Constants"
-import { ICarbonToken } from "./ICarbonToken";
+import { IPoolToken } from "./IPoolToken";
 import { BCT } from "./impl/BCT";
 import { MCO2 } from "./impl/MCO2";
 import { NBO } from "./impl/NBO";
 import { NCT } from "./impl/NCT";
 import { UBO } from "./impl/UBO";
 
-export class CarbonTokenFactory {
+export class PoolTokenFactory {
     constructor() {}
 
-    public getTokenForAddress(address: Address): ICarbonToken {
+    public getTokenForAddress(address: Address): IPoolToken {
 
         if (address.equals(Address.fromHexString(constants.BCT_ERC20_CONTRACT))) {
             return new BCT(address)

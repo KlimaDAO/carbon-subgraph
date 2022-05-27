@@ -14,8 +14,8 @@ import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateKlimaRetire } from "./utils/KlimaRetire"
 import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts"
 import { CarbonMetricUtils } from "./utils/CarbonMetrics"
-import { MCO2 } from "./utils/carbon_token/impl/MCO2"
-import { CarbonTokenFactory } from "./utils/carbon_token/CarbonTokenFactory"
+import { MCO2 } from "./utils/pool_token/impl/MCO2"
+import { PoolTokenFactory } from "./utils/pool_token/PoolTokenFactory"
 
 export function handleMossRetired(event: MossRetired): void {
 
@@ -127,6 +127,6 @@ function generateDailyKlimaRetirement(klimaRetire: KlimaRetire): DailyKlimaRetir
     return dailyKlimaRetirement
 }
 function updateKlimaRetirementProtocolMetrics(pool: string, timestamp: BigInt, retiredAmount: BigInt): void {
-    const token = new CarbonTokenFactory().getTokenForAddress(Address.fromString(pool))
+    const token = new PoolTokenFactory().getTokenForAddress(Address.fromString(pool))
     CarbonMetricUtils.updateKlimaRetirements(token, timestamp, retiredAmount)
 }

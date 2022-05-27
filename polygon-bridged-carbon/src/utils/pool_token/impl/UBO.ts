@@ -1,11 +1,11 @@
 import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
 import { ERC20 } from "../../../../generated/ToucanFactory/ERC20";
 import { CarbonMetric } from "../../../../generated/schema";
-import { ICarbonToken } from "../ICarbonToken";
+import { IPoolToken } from "../IPoolToken";
 import * as constants from "../../Constants"
 import { toDecimal } from "../../../../../lib/utils/Decimals";
 
-export class UBO implements ICarbonToken {
+export class UBO implements IPoolToken {
 
     private contractAddress: Address
 

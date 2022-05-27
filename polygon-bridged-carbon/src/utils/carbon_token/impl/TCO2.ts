@@ -1,16 +1,16 @@
 import { BigDecimal, BigInt } from "@graphprotocol/graph-ts";
 import { toDecimal } from "../../../../../lib/utils/Decimals";
 import { CarbonMetric } from "../../../../generated/schema";
-import { IUnderlyingToken } from "../IUnderlyingToken";
+import { ICarbonToken } from "../ICarbonToken";
 
-export class C3T implements IUnderlyingToken {
+export class TCO2 implements ICarbonToken {
 
     getDecimals(): number {
         return 18
     }
 
     returnUpdatedRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
-        carbonMetrics.c3tRetired = carbonMetrics.c3tRetired.plus(toDecimal(amount, this.getDecimals()))
+        carbonMetrics.tco2Retired = carbonMetrics.tco2Retired.plus(toDecimal(amount, this.getDecimals()))
         carbonMetrics.totalRetirements = carbonMetrics.totalRetirements.plus(toDecimal(amount, this.getDecimals()))
 
         return carbonMetrics

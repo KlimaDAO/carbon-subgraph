@@ -5,7 +5,7 @@ import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateDeposit } from "./utils/Deposit"
 import { loadOrCreateRedeem } from "./utils/Redeem"
 import { CarbonMetricUtils } from "./utils/CarbonMetrics"
-import { NBO } from "./utils/carbon_token/impl/NBO"
+import { NBO } from "./utils/pool_token/impl/NBO"
 
 export function handleDeposit(event: Deposited): void {
 
@@ -22,7 +22,7 @@ export function handleDeposit(event: Deposited): void {
     offset.save()
     deposit.save()
 
-    CarbonMetricUtils.updateSupply(new NBO(event.address), event.block.timestamp)
+    CarbonMetricUtils.updatePoolTokenSupply(new NBO(event.address), event.block.timestamp)
 }
 
 export function handleRedeem(event: Redeemed): void {
@@ -39,5 +39,5 @@ export function handleRedeem(event: Redeemed): void {
     offset.save()
     redeem.save()
 
-    CarbonMetricUtils.updateSupply(new NBO(event.address), event.block.timestamp)
+    CarbonMetricUtils.updatePoolTokenSupply(new NBO(event.address), event.block.timestamp)
 }

@@ -6,7 +6,7 @@ import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateDeposit } from "./utils/Deposit"
 import { loadOrCreateRedeem } from "./utils/Redeem"
 import { CarbonMetricUtils } from "../src/utils/CarbonMetrics"
-import { BCT } from "./utils/carbon_token/impl/BCT";
+import { BCT } from "./utils/pool_token/impl/BCT";
 
 
 export function handleDeposit(event: Deposited): void {
@@ -24,7 +24,7 @@ export function handleDeposit(event: Deposited): void {
     deposit.save()
     offset.save()
 
-    CarbonMetricUtils.updateSupply(new BCT(event.address), event.block.timestamp)
+    CarbonMetricUtils.updatePoolTokenSupply(new BCT(event.address), event.block.timestamp)
 }
 
 export function handleRedeem(event: Redeemed): void {
@@ -41,5 +41,5 @@ export function handleRedeem(event: Redeemed): void {
     offset.save()
     redeem.save()
 
-    CarbonMetricUtils.updateSupply(new BCT(event.address), event.block.timestamp)
+    CarbonMetricUtils.updatePoolTokenSupply(new BCT(event.address), event.block.timestamp)
 }

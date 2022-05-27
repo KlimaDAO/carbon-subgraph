@@ -4,7 +4,7 @@ import { toDecimal } from "../../lib/utils/Decimals"
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateDeposit } from "./utils/Deposit"
 import { loadOrCreateRedeem } from "./utils/Redeem"
-import { UBO } from "./utils/carbon_token/impl/UBO"
+import { UBO } from "./utils/pool_token/impl/UBO"
 import { CarbonMetricUtils } from "./utils/CarbonMetrics"
 
 export function handleDeposit(event: Deposited): void {
@@ -22,7 +22,7 @@ export function handleDeposit(event: Deposited): void {
     offset.save()
     deposit.save()
 
-    CarbonMetricUtils.updateSupply(new UBO(event.address), event.block.timestamp)
+    CarbonMetricUtils.updatePoolTokenSupply(new UBO(event.address), event.block.timestamp)
 }
 
 export function handleRedeem(event: Redeemed): void {
@@ -39,5 +39,5 @@ export function handleRedeem(event: Redeemed): void {
     offset.save()
     redeem.save()
 
-    CarbonMetricUtils.updateSupply(new UBO(event.address), event.block.timestamp)
+    CarbonMetricUtils.updatePoolTokenSupply(new UBO(event.address), event.block.timestamp)
 }

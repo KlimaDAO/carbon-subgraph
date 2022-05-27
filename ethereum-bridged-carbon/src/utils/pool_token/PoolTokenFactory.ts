@@ -1,13 +1,13 @@
 import { Address } from "@graphprotocol/graph-ts";
 
 import * as constants from "../Constants"
-import { ICarbonToken } from "./ICarbonToken";
+import { IPoolToken } from "./IPoolToken";
 import { MCO2 } from "./impl/MCO2";
 
-export class CarbonTokenFactory {
+export class PoolTokenFactory {
     constructor() {}
 
-    public getTokenForAddress(address: Address): ICarbonToken {
+    public getTokenForAddress(address: Address): IPoolToken {
 
         if (address.equals(Address.fromHexString(constants.MCO2_ERC20_CONTRACT))) {
             return new MCO2(address)

@@ -1,8 +1,8 @@
 import { BigInt, BigDecimal } from "@graphprotocol/graph-ts";
 import { CarbonMetric } from "../../generated/schema";
 import { dayFromTimestamp } from "../../../lib/utils/Dates";
+import { IPoolToken } from "./pool_token/IPoolToken";
 import { ICarbonToken } from "./carbon_token/ICarbonToken";
-import { IUnderlyingToken } from "./underlying_token/IUnderlyingToken";
 import * as constants from "./Constants"
 
 
@@ -11,23 +11,23 @@ export class CarbonMetricUtils {
   private static DAY_IN_SECONDS: BigInt = BigInt.fromString("86400")
   private static INIT_TIMESTAMP: BigInt = BigInt.fromString(constants.METRICS_INIT_TIMESTAMP)
 
-  static updateSupply(carbonToken: ICarbonToken, timestamp: BigInt): void {
+  static updatePoolTokenSupply(poolToken: IPoolToken, timestamp: BigInt): void {
     let carbonMetrics = this.loadCarbonMetrics(timestamp)
-    carbonMetrics = carbonToken.returnUpdatedSupplyMetrics(carbonMetrics)
+    carbonMetrics = poolToken.returnUpdatedSupplyMetrics(carbonMetrics)
 
     carbonMetrics.save()
   }
 
-  static updateKlimaRetirements(carbonToken: ICarbonToken, timestamp: BigInt, amount: BigInt): void {
+  static updateKlimaRetirements(poolToken: IPoolToken, timestamp: BigInt, amount: BigInt): void {
     let carbonMetrics = this.loadCarbonMetrics(timestamp)
-    carbonMetrics = carbonToken.returnUpdatedKlimaRetirementMetrics(carbonMetrics, amount)
+    carbonMetrics = poolToken.returnUpdatedKlimaRetirementMetrics(carbonMetrics, amount)
 
     carbonMetrics.save()
   }
 
-  static updateUnderlyingTokenRetirements(underlyingToken: IUnderlyingToken, timestamp: BigInt, amount: BigInt): void {
+  static updateCarbonTokenRetirements(carbonToken: ICarbonToken, timestamp: BigInt, amount: BigInt): void {
     let carbonMetrics = this.loadCarbonMetrics(timestamp)
-    carbonMetrics = underlyingToken.returnUpdatedRetirementMetrics(carbonMetrics, amount)
+    carbonMetrics = carbonToken.returnUpdatedRetirementMetrics(carbonMetrics, amount)
 
     carbonMetrics.save()
   }

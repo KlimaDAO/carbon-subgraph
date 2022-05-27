@@ -1,11 +1,10 @@
 import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
-import { ERC20 } from "../../../../generated/ToucanFactory/ERC20";
+import { ERC20 } from "../../../../generated/MossCarbon/ERC20";
 import { CarbonMetric } from "../../../../generated/schema";
-import { ICarbonToken } from "../ICarbonToken";
-import * as constants from "../../Constants"
+import { IPoolToken } from "../IPoolToken";
 import { toDecimal } from "../../../../../lib/utils/Decimals";
 
-export class NCT implements ICarbonToken {
+export class MCO2 implements IPoolToken {
 
     private contractAddress: Address
 
@@ -18,26 +17,18 @@ export class NCT implements ICarbonToken {
     }
 
     returnUpdatedSupplyMetrics(carbonMetrics: CarbonMetric): CarbonMetric {
-        const oldSupply = carbonMetrics.nctSupply
+        const oldSupply = carbonMetrics.mco2Supply
         const newSupplyRaw = ERC20.bind(this.contractAddress).totalSupply()
         const newSupply = toDecimal(newSupplyRaw, this.getDecimals())
 
         const deltaSupply = newSupply.minus(oldSupply)
-        carbonMetrics.nctSupply = newSupply
+        carbonMetrics.mco2Supply = newSupply
         carbonMetrics.totalCarbonSupply = carbonMetrics.totalCarbonSupply.plus(deltaSupply)
 
         return carbonMetrics
     }
 
     returnUpdatedKlimaRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
-        const oldKlimaRetired = carbonMetrics.nctKlimaRetired
-        const newKlimaRetired = carbonMetrics.nctKlimaRetired.plus(toDecimal(amount, this.getDecimals()))
-
-        const delta = newKlimaRetired.minus(oldKlimaRetired)
-        carbonMetrics.nctKlimaRetired = newKlimaRetired
-        carbonMetrics.totalKlimaRetirements = carbonMetrics.totalKlimaRetirements.plus(delta)
-
-        return carbonMetrics
+        throw new Error("Not yet implemented")
     }
-
 }
