@@ -12,7 +12,6 @@ export function loadOrCreateTransaction(eth_transaction: ethereum.Transaction, e
     transaction.from = eth_transaction.from
     transaction.to = eth_transaction.to
     transaction.value = eth_transaction.value
-    //transaction.gasUsed = eth_transaction.gasUsed
     transaction.gasPrice = eth_transaction.gasPrice
     transaction.save()
   }

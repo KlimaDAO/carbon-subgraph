@@ -4,7 +4,7 @@ import { Bridge, CarbonOffset, Transaction } from "../../generated/schema";
 
 export function loadOrCreateBridge(offset: CarbonOffset, transaction: Transaction): Bridge {
 
-    let id = transaction.timestamp.toString() + offset.tokenAddress
+    let id = transaction.id.toString() + offset.tokenAddress
 
     let bridge = Bridge.load(id)
     if (bridge == null) {
