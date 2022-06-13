@@ -1,9 +1,13 @@
+import { BigInt } from "@graphprotocol/graph-ts";
 import { Deposited, Redeemed } from "../generated/BaseCarbonTonne/BaseCarbonTonne"
 import { loadOrCreateCarbonOffset } from "./utils/CarbonOffsets"
 import { toDecimal } from "../../lib/utils/Decimals"
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateDeposit } from "./utils/Deposit"
 import { loadOrCreateRedeem } from "./utils/Redeem"
+import { CarbonMetricUtils } from "../src/utils/CarbonMetrics"
+import { BCT } from "./utils/pool_token/impl/BCT";
+
 
 export function handleDeposit(event: Deposited): void {
 
@@ -19,6 +23,8 @@ export function handleDeposit(event: Deposited): void {
 
     deposit.save()
     offset.save()
+
+    CarbonMetricUtils.updatePoolTokenSupply(new BCT(event.address), event.block.timestamp)
 }
 
 export function handleRedeem(event: Redeemed): void {
@@ -34,4 +40,6 @@ export function handleRedeem(event: Redeemed): void {
 
     offset.save()
     redeem.save()
+
+    CarbonMetricUtils.updatePoolTokenSupply(new BCT(event.address), event.block.timestamp)
 }

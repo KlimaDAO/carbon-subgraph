@@ -69,5 +69,15 @@ type Transaction @entity {
   from: Bytes!
   to: Bytes
   value: BigInt!
+  # gasUsed: BigInt!
   gasPrice: BigInt!
+}
+
+type CarbonMetric @entity {
+  id: ID!
+  timestamp: BigInt!
+  mco2Supply: BigDecimal!
+  totalCarbonSupply: BigDecimal!
+  mco2Retired: BigDecimal!
+  totalRetirements: BigDecimal!
 }

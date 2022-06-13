@@ -15,6 +15,29 @@ export class CarbonOffset extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("name", Value.fromString(""));
+    this.set("tokenAddress", Value.fromString(""));
+    this.set("bridge", Value.fromString(""));
+    this.set("registry", Value.fromString(""));
+    this.set("totalBridged", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalRetired", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("currentSupply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("vintage", Value.fromString(""));
+    this.set("projectID", Value.fromString(""));
+    this.set("standard", Value.fromString(""));
+    this.set("methodology", Value.fromString(""));
+    this.set("country", Value.fromString(""));
+    this.set("region", Value.fromString(""));
+    this.set("storageMethod", Value.fromString(""));
+    this.set("method", Value.fromString(""));
+    this.set("emissionType", Value.fromString(""));
+    this.set("category", Value.fromString(""));
+    this.set("coBenefits", Value.fromString(""));
+    this.set("correspAdjustment", Value.fromString(""));
+    this.set("additionalCertification", Value.fromString(""));
+    this.set("klimaRanking", Value.fromBigInt(BigInt.zero()));
+    this.set("lastUpdate", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -23,7 +46,8 @@ export class CarbonOffset extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type CarbonOffset must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        "Cannot save CarbonOffset entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
       );
       store.set("CarbonOffset", id.toString(), this);
     }
@@ -288,6 +312,12 @@ export class Bridge extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("transaction", Value.fromString(""));
+    this.set("offset", Value.fromString(""));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("bridger", Value.fromString(""));
   }
 
   save(): void {
@@ -296,7 +326,8 @@ export class Bridge extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Bridge must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        "Cannot save Bridge entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
       );
       store.set("Bridge", id.toString(), this);
     }
@@ -365,6 +396,13 @@ export class Retire extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("transaction", Value.fromString(""));
+    this.set("offset", Value.fromString(""));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("beneficiary", Value.fromString(""));
+    this.set("retiree", Value.fromString(""));
   }
 
   save(): void {
@@ -373,7 +411,8 @@ export class Retire extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Retire must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        "Cannot save Retire entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
       );
       store.set("Retire", id.toString(), this);
     }
@@ -451,6 +490,17 @@ export class Batch extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("serialNumber", Value.fromString(""));
+    this.set("projectID", Value.fromBigInt(BigInt.zero()));
+    this.set("vintage", Value.fromString(""));
+    this.set("creditType", Value.fromString(""));
+    this.set("value", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("tokenAddress", Value.fromString(""));
+    this.set("broker", Value.fromString(""));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("originaltx", Value.fromString(""));
+    this.set("transaction", Value.fromString(""));
   }
 
   save(): void {
@@ -459,7 +509,8 @@ export class Batch extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Batch must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        "Cannot save Batch entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
       );
       store.set("Batch", id.toString(), this);
     }
@@ -573,6 +624,13 @@ export class Transaction extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockHash", Value.fromBytes(Bytes.empty()));
+    this.set("from", Value.fromBytes(Bytes.empty()));
+    this.set("value", Value.fromBigInt(BigInt.zero()));
+    this.set("gasPrice", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -581,7 +639,8 @@ export class Transaction extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Transaction must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        "Cannot save Transaction entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
       );
       store.set("Transaction", id.toString(), this);
     }
@@ -669,5 +728,89 @@ export class Transaction extends Entity {
 
   set gasPrice(value: BigInt) {
     this.set("gasPrice", Value.fromBigInt(value));
+  }
+}
+
+export class CarbonMetric extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("mco2Supply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalCarbonSupply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("mco2Retired", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("totalRetirements", Value.fromBigDecimal(BigDecimal.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save CarbonMetric entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save CarbonMetric entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("CarbonMetric", id.toString(), this);
+    }
+  }
+
+  static load(id: string): CarbonMetric | null {
+    return changetype<CarbonMetric | null>(store.get("CarbonMetric", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get mco2Supply(): BigDecimal {
+    let value = this.get("mco2Supply");
+    return value!.toBigDecimal();
+  }
+
+  set mco2Supply(value: BigDecimal) {
+    this.set("mco2Supply", Value.fromBigDecimal(value));
+  }
+
+  get totalCarbonSupply(): BigDecimal {
+    let value = this.get("totalCarbonSupply");
+    return value!.toBigDecimal();
+  }
+
+  set totalCarbonSupply(value: BigDecimal) {
+    this.set("totalCarbonSupply", Value.fromBigDecimal(value));
+  }
+
+  get mco2Retired(): BigDecimal {
+    let value = this.get("mco2Retired");
+    return value!.toBigDecimal();
+  }
+
+  set mco2Retired(value: BigDecimal) {
+    this.set("mco2Retired", Value.fromBigDecimal(value));
+  }
+
+  get totalRetirements(): BigDecimal {
+    let value = this.get("totalRetirements");
+    return value!.toBigDecimal();
+  }
+
+  set totalRetirements(value: BigDecimal) {
+    this.set("totalRetirements", Value.fromBigDecimal(value));
   }
 }
