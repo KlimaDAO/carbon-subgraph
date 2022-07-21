@@ -11,6 +11,7 @@ type CarbonOffset @entity {
   projectID: String!
   standard: String!
   methodology: String!
+  methodologyCategory: String!
   country: String!
   region: String!
   storageMethod: String!
