@@ -358,62 +358,6 @@ export class CarbonOffset extends Entity {
   }
 }
 
-export class UndefinedCategory extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("tokenAddress", Value.fromBytes(Bytes.empty()));
-    this.set("methodology", Value.fromString(""));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save UndefinedCategory entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save UndefinedCategory entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("UndefinedCategory", id.toString(), this);
-    }
-  }
-
-  static load(id: string): UndefinedCategory | null {
-    return changetype<UndefinedCategory | null>(
-      store.get("UndefinedCategory", id)
-    );
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get tokenAddress(): Bytes {
-    let value = this.get("tokenAddress");
-    return value!.toBytes();
-  }
-
-  set tokenAddress(value: Bytes) {
-    this.set("tokenAddress", Value.fromBytes(value));
-  }
-
-  get methodology(): string {
-    let value = this.get("methodology");
-    return value!.toString();
-  }
-
-  set methodology(value: string) {
-    this.set("methodology", Value.fromString(value));
-  }
-}
-
 export class Bridge extends Entity {
   constructor(id: string) {
     super();
