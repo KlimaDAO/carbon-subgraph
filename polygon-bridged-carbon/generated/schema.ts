@@ -27,6 +27,7 @@ export class CarbonOffset extends Entity {
     this.set("projectID", Value.fromString(""));
     this.set("standard", Value.fromString(""));
     this.set("methodology", Value.fromString(""));
+    this.set("methodologyCategory", Value.fromString(""));
     this.set("country", Value.fromString(""));
     this.set("region", Value.fromString(""));
     this.set("storageMethod", Value.fromString(""));
@@ -167,6 +168,15 @@ export class CarbonOffset extends Entity {
 
   set methodology(value: string) {
     this.set("methodology", Value.fromString(value));
+  }
+
+  get methodologyCategory(): string {
+    let value = this.get("methodologyCategory");
+    return value!.toString();
+  }
+
+  set methodologyCategory(value: string) {
+    this.set("methodologyCategory", Value.fromString(value));
   }
 
   get country(): string {

@@ -2,6 +2,7 @@ import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts"
 import { CarbonOffset, Transaction } from '../../generated/schema'
 import { ToucanCarbonOffsets } from "../../generated/templates/ToucanCarbonOffsets/ToucanCarbonOffsets"
 import { C3ProjectToken } from "../../generated/templates/C3ProjectToken/C3ProjectToken"
+import { MethodologyCategories } from "./MethodologyCategories"
 
 
 export function loadOrCreateCarbonOffset(transaction: Transaction, token: Address, bridge: String, registry: String): CarbonOffset {
@@ -70,6 +71,7 @@ export function createToucanCarbonOffset(transaction: Transaction, token: Addres
     carbonOffset.projectID = attributes.value0.projectId
     carbonOffset.standard = attributes.value0.standard
     carbonOffset.methodology = attributes.value0.methodology
+    carbonOffset.methodologyCategory = MethodologyCategories.getMethodologyCategory(carbonOffset.methodology)
     carbonOffset.region = attributes.value0.region
     carbonOffset.storageMethod = attributes.value0.storageMethod
     carbonOffset.method = attributes.value0.method
@@ -123,6 +125,7 @@ export function createC3ProjectToken(transaction: Transaction, token: Address, b
     carbonOffset.projectID = attributes.project_id
     carbonOffset.standard = attributes.registry
     carbonOffset.methodology = attributes.methodology
+    carbonOffset.methodologyCategory = MethodologyCategories.getMethodologyCategory(carbonOffset.methodology)
     carbonOffset.country = attributes.country
     carbonOffset.region = attributes.region
     carbonOffset.category = attributes.project_type
