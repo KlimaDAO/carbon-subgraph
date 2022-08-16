@@ -14,7 +14,7 @@
     "deploy-version": "graph deploy --ipfs $npm_config_ipfs --node $npm_config_node --version-label $npm_config_label ethereum-bridged-carbon",
     "deploy-hosted": "graph deploy --product hosted-service $npm_config_path"
   },
-  "dependencies": {
+  "devDependencies": {
     "@graphprotocol/graph-cli": "0.26.0",
     "@graphprotocol/graph-ts": "0.26.0"
   }
