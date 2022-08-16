@@ -8,7 +8,11 @@
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ klimadao/ethereum-bridged-carbon",
     "create-local": "graph create --node http://localhost:8020/ klimadao/ethereum-bridged-carbon",
     "remove-local": "graph remove --node http://localhost:8020/ klimadao/ethereum-bridged-carbon",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 klimadao/ethereum-bridged-carbon"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 klimadao/ethereum-bridged-carbon",
+    "create-args": "graph create --node $npm_config_node ethereum-bridged-carbon",
+    "deploy-args": "graph deploy --ipfs $npm_config_ipfs --node $npm_config_node ethereum-bridged-carbon",
+    "deploy-version": "graph deploy --ipfs $npm_config_ipfs --node $npm_config_node --version-label $npm_config_label ethereum-bridged-carbon",
+    "deploy-hosted": "graph deploy --product hosted-service $npm_config_path"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.26.0",
