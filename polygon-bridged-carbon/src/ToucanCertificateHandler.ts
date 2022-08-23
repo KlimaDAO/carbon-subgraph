@@ -13,7 +13,7 @@ export function handleToucanCertificateTransfer(event: Transfer): void {
 
     //If the NFT Transfer event happens after the ToucanRetired event that stores KlimaRetire entity
     if (klimaRetire != null) {
-        klimaRetire.toucanCertificateTokenID = event.params.tokenId
+        klimaRetire.certificateTokenID = event.params.tokenId
         toucanCertificate.klimaRetire = klimaRetire.id
 
         klimaRetire.save()

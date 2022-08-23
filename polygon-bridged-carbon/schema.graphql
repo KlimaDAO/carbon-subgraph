@@ -98,7 +98,7 @@ type KlimaRetire @entity {
   beneficiaryAddress: String!
   retirementMessage: String!
   specific: Boolean!
-  toucanCertificateTokenID: BigInt
+  certificateTokenID: BigInt
 }
 
 type DailyKlimaRetirement @entity {

@@ -79,7 +79,7 @@ export function handleToucanRetired(event: ToucanRetired): void {
 
     //If ToucanRetired event happens after the NFT Transfer event which creates ToucanCertificate entity
     if (toucanCertificate != null) {
-        retire.toucanCertificateTokenID = toucanCertificate.tokenID
+        retire.certificateTokenID = toucanCertificate.tokenID
         toucanCertificate.klimaRetire = retire.id
 
         toucanCertificate.save()

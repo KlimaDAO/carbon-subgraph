@@ -998,8 +998,8 @@ export class KlimaRetire extends Entity {
     this.set("specific", Value.fromBoolean(value));
   }
 
-  get toucanCertificateTokenID(): BigInt | null {
-    let value = this.get("toucanCertificateTokenID");
+  get certificateTokenID(): BigInt | null {
+    let value = this.get("certificateTokenID");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -1007,11 +1007,11 @@ export class KlimaRetire extends Entity {
     }
   }
 
-  set toucanCertificateTokenID(value: BigInt | null) {
+  set certificateTokenID(value: BigInt | null) {
     if (!value) {
-      this.unset("toucanCertificateTokenID");
+      this.unset("certificateTokenID");
     } else {
-      this.set("toucanCertificateTokenID", Value.fromBigInt(<BigInt>value));
+      this.set("certificateTokenID", Value.fromBigInt(<BigInt>value));
     }
   }
 }
