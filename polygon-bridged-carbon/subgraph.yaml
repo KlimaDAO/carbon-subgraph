@@ -1,4 +1,4 @@
-specVersion: 0.0.5
+specVersion: 0.0.2
 description: Polygon Bridged Carbon
 repository: https://github.com/KlimaDAO/carbon-subgraph
 schema:
