@@ -997,6 +997,23 @@ export class KlimaRetire extends Entity {
   set specific(value: boolean) {
     this.set("specific", Value.fromBoolean(value));
   }
+
+  get toucanCertificateTokenID(): BigInt | null {
+    let value = this.get("toucanCertificateTokenID");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set toucanCertificateTokenID(value: BigInt | null) {
+    if (!value) {
+      this.unset("toucanCertificateTokenID");
+    } else {
+      this.set("toucanCertificateTokenID", Value.fromBigInt(<BigInt>value));
+    }
+  }
 }
 
 export class DailyKlimaRetirement extends Entity {
@@ -1296,5 +1313,88 @@ export class CarbonMetric extends Entity {
 
   set totalKlimaRetirements(value: BigDecimal) {
     this.set("totalKlimaRetirements", Value.fromBigDecimal(value));
+  }
+}
+
+export class ToucanCertificate extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("transaction", Value.fromString(""));
+    this.set("tokenID", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save ToucanCertificate entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save ToucanCertificate entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("ToucanCertificate", id.toString(), this);
+    }
+  }
+
+  static load(id: string): ToucanCertificate | null {
+    return changetype<ToucanCertificate | null>(
+      store.get("ToucanCertificate", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get klimaRetire(): string | null {
+    let value = this.get("klimaRetire");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set klimaRetire(value: string | null) {
+    if (!value) {
+      this.unset("klimaRetire");
+    } else {
+      this.set("klimaRetire", Value.fromString(<string>value));
+    }
+  }
+
+  get tokenID(): BigInt {
+    let value = this.get("tokenID");
+    return value!.toBigInt();
+  }
+
+  set tokenID(value: BigInt) {
+    this.set("tokenID", Value.fromBigInt(value));
   }
 }

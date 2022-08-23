@@ -22,3 +22,7 @@ export function loadOrCreateKlimaRetire(offset: CarbonOffset, transaction: Trans
 
     return retire as KlimaRetire
 }
+
+export function loadKlimaRetire(transaction: Transaction): KlimaRetire | null {
+    return KlimaRetire.load(transaction.id)
+}
