@@ -98,6 +98,7 @@ type KlimaRetire @entity {
   beneficiaryAddress: String!
   retirementMessage: String!
   specific: Boolean!
+  certificateTokenID: BigInt
 }
 
 type DailyKlimaRetirement @entity {
@@ -129,4 +130,12 @@ type CarbonMetric @entity {
   uboKlimaRetired: BigDecimal!
   nboKlimaRetired: BigDecimal!
   totalKlimaRetirements: BigDecimal!
+}
+
+type ToucanCertificate @entity {
+  id: ID!
+  timestamp: BigInt!
+  transaction: Transaction!
+  klimaRetire: KlimaRetire
+  tokenID: BigInt!
 }

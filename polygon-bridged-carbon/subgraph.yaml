@@ -239,6 +239,26 @@ dataSources:
       eventHandlers:
         - event: C3Retired(indexed address,indexed address,string,string,indexed address,address,uint256)
           handler: handleC3Retired
+  - kind: ethereum/contract
+    name: ToucanCertificate
+    network: matic
+    source:
+      address: '0x5e377f16E4ec6001652befD737341a28889Af002'
+      abi: ToucanCertificate
+      startBlock: 27360444
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/ToucanCertificateHandler.ts
+      entities:
+        - ToucanCertificate
+      abis:
+        - name: ToucanCertificate
+          file: ../lib/abis/ToucanCertificate.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleToucanCertificateTransfer
 templates:
   - name: ToucanCarbonOffsets
     kind: ethereum/contract

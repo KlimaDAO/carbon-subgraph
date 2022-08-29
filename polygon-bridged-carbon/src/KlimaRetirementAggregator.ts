@@ -1,7 +1,7 @@
 import { MossRetired, RetireMossCarbon } from "../generated/RetireMossCarbon/RetireMossCarbon"
 import { RetireToucanCarbon, ToucanRetired } from "../generated/RetireToucanCarbon/RetireToucanCarbon"
 import { C3Retired, RetireC3Carbon } from "../generated/RetireC3Carbon/RetireC3Carbon"
-import { KlimaRetire, DailyKlimaRetirement } from "../generated/schema";
+import { KlimaRetire, DailyKlimaRetirement, ToucanCertificate } from "../generated/schema";
 import * as constants from "../../lib/utils/Constants";
 
 import { KlimaCarbonRetirements } from "../generated/RetireC3Carbon/KlimaCarbonRetirements"
@@ -16,6 +16,7 @@ import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts"
 import { CarbonMetricUtils } from "./utils/CarbonMetrics"
 import { MCO2 } from "./utils/pool_token/impl/MCO2"
 import { PoolTokenFactory } from "./utils/pool_token/PoolTokenFactory"
+import { loadToucanCertificate } from "./utils/ToucanCertificate";
 
 export function handleMossRetired(event: MossRetired): void {
 
@@ -53,6 +54,7 @@ export function handleToucanRetired(event: ToucanRetired): void {
     let transaction = loadOrCreateTransaction(event.transaction, event.block)
     let offset = loadOrCreateCarbonOffset(transaction, event.params.carbonToken, 'Toucan', 'Verra')
     let retire = loadOrCreateKlimaRetire(offset, transaction)
+    const toucanCertificate = loadToucanCertificate(transaction)
     let klimaRetirements = KlimaCarbonRetirements.bind(Address.fromString(constants.KLIMA_CARBON_RETIREMENTS_CONTRACT))
 
     const token = getTokenFromPoolAddress(event.params.carbonPool)
@@ -74,6 +76,14 @@ export function handleToucanRetired(event: ToucanRetired): void {
     dailyRetirement.save()
     // TODO: add separate handler for specific retirements
     // retire.specific = true
+
+    //If ToucanRetired event happens after the NFT Transfer event which creates ToucanCertificate entity
+    if (toucanCertificate != null) {
+        retire.certificateTokenID = toucanCertificate.tokenID
+        toucanCertificate.klimaRetire = retire.id
+
+        toucanCertificate.save()
+    }
 
     retire.save()
 
