@@ -2,7 +2,7 @@ import { MossRetired, RetireMossCarbon } from "../generated/RetireMossCarbon/Ret
 import { RetireToucanCarbon, ToucanRetired } from "../generated/RetireToucanCarbon/RetireToucanCarbon"
 import { C3Retired, RetireC3Carbon } from "../generated/RetireC3Carbon/RetireC3Carbon"
 import { KlimaRetire, DailyKlimaRetirement, ToucanCertificate } from "../generated/schema";
-import * as constants from "../../lib/utils/Constants";
+import * as constants from "./utils/Constants";
 
 import { KlimaCarbonRetirements } from "../generated/RetireC3Carbon/KlimaCarbonRetirements"
 import { loadOrCreateCarbonOffset } from "./utils/CarbonOffsets"
