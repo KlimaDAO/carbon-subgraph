@@ -13,7 +13,6 @@ export function loadOrCreateBridge(offset: CarbonOffset, transaction: Transactio
         bridge.offset = offset.id
         bridge.value = BigDecimal.fromString('0')
         bridge.bridger = ''
-        bridge.direction = ''
     }
 
     return bridge as Bridge

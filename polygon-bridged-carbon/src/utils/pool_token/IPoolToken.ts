@@ -4,5 +4,6 @@ import { CarbonMetric } from "../../../generated/schema";
 export interface IPoolToken {
   getDecimals(): number
   returnUpdatedSupplyMetrics(carbonMetrics: CarbonMetric): CarbonMetric
+  returnUpdatedCrosschainSupplyMetrics(carbonMetrics: CarbonMetric, amountRaw: BigInt): CarbonMetric
   returnUpdatedKlimaRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric
 }

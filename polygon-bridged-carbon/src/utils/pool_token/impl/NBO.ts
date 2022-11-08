@@ -29,6 +29,10 @@ export class NBO implements IPoolToken {
         return carbonMetrics
     }
 
+    returnUpdatedCrosschainSupplyMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
+        throw new Error("Method not implemented.");
+    }
+
     returnUpdatedKlimaRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
         const oldKlimaRetired = carbonMetrics.nboKlimaRetired
         const newKlimaRetired = carbonMetrics.nboKlimaRetired.plus(toDecimal(amount, this.getDecimals()))

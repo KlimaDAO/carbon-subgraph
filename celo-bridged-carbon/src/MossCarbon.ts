@@ -25,7 +25,6 @@ export function handleTransfer(event: Transfer): void {
         let bridge = loadOrCreateBridge(carbonOffset, transaction)
         bridge.value = toDecimal(event.params.value, 18)
         bridge.bridger = event.params.to.toHexString()
-        bridge.direction = 'Received'
 
         bridge.save()
 
@@ -40,7 +39,6 @@ export function handleTransfer(event: Transfer): void {
         let bridge = loadOrCreateBridge(carbonOffset, transaction)
         bridge.value = toDecimal(event.params.value, 18)
         bridge.bridger = event.params.from.toHexString()
-        bridge.direction = 'Sent'
 
         bridge.save()
 

@@ -18,6 +18,13 @@ export class CarbonMetricUtils {
     carbonMetrics.save()
   }
 
+    static updateCrosschainTokenSupply(poolToken: IPoolToken, timestamp: BigInt, amount: BigInt): void {
+    let carbonMetrics = this.loadCarbonMetrics(timestamp)
+    carbonMetrics = poolToken.returnUpdatedCrosschainSupplyMetrics(carbonMetrics, amount)
+
+    carbonMetrics.save()
+  }
+
   static updateKlimaRetirements(poolToken: IPoolToken, timestamp: BigInt, amount: BigInt): void {
     let carbonMetrics = this.loadCarbonMetrics(timestamp)
     carbonMetrics = poolToken.returnUpdatedKlimaRetirementMetrics(carbonMetrics, amount)

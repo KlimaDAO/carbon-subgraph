@@ -29,6 +29,17 @@ export class NCT implements IPoolToken {
         return carbonMetrics
     }
 
+    returnUpdatedCrosschainSupplyMetrics(carbonMetrics: CarbonMetric, amountRaw: BigInt): CarbonMetric {
+        const oldCrosschainSupply = carbonMetrics.nctCrosschainSupply
+        const amount = toDecimal(amountRaw, this.getDecimals())
+        const newCrosschainSupply = oldCrosschainSupply.plus(amount)
+
+        carbonMetrics.nctCrosschainSupply = newCrosschainSupply
+        carbonMetrics.totalCrosschainSupply = carbonMetrics.totalCrosschainSupply.plus(amount)
+
+        return carbonMetrics
+    }
+
     returnUpdatedKlimaRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
         const oldKlimaRetired = carbonMetrics.nctKlimaRetired
         const newKlimaRetired = carbonMetrics.nctKlimaRetired.plus(toDecimal(amount, this.getDecimals()))

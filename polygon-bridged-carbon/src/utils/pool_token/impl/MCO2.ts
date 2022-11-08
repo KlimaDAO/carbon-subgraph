@@ -29,6 +29,10 @@ export class MCO2 implements IPoolToken {
         return carbonMetrics
     }
 
+    returnUpdatedCrosschainSupplyMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
+        throw new Error("Method not implemented.");
+    }
+
     returnUpdatedKlimaRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
         const oldKlimaRetired = carbonMetrics.mco2KlimaRetired
         const newKlimaRetired = carbonMetrics.mco2KlimaRetired.plus(toDecimal(amount, this.getDecimals()))

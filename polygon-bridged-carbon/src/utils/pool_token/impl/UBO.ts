@@ -29,6 +29,10 @@ export class UBO implements IPoolToken {
         return carbonMetrics
     }
 
+    returnUpdatedCrosschainSupplyMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
+        throw new Error("Method not implemented.");
+    }
+
     returnUpdatedKlimaRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
         const oldKlimaRetired = carbonMetrics.uboKlimaRetired
         const newKlimaRetired = carbonMetrics.uboKlimaRetired.plus(toDecimal(amount, this.getDecimals()))

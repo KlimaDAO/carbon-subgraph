@@ -1,6 +1,6 @@
 import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
 import { CarbonMetric } from "../../../../generated/schema";
-import { ERC20 } from "../../../../generated/ToucanFactory/ERC20";
+import { ERC20 } from "../../../../generated/ToucanCrossChainMessenger/ERC20";
 import { IPoolToken } from "../IPoolToken";
 import * as constants from "../../Constants"
 import { toDecimal } from "../../../../../lib/utils/Decimals";

@@ -1,5 +1,5 @@
 import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
-import { ERC20 } from "../../../../generated/ToucanFactory/ERC20";
+import { ERC20 } from "../../../../generated/ToucanCrossChainMessenger/ERC20";
 import { CarbonMetric } from "../../../../generated/schema";
 import { IPoolToken } from "../IPoolToken";
 import * as constants from "../../Constants"

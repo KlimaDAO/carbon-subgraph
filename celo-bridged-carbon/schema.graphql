@@ -37,6 +37,19 @@ type Bridge @entity {
   offset: CarbonOffset!
   value: BigDecimal!
   bridger: String!
+}
+
+"""
+CrosschainBridge entity tracks pool bridges across different blockchains
+Currently used by Toucan
+"""
+type CrosschainBridge @entity {
+  id: ID!
+  timestamp: BigInt!
+  transaction: Transaction!
+  pool: String!
+  value: BigDecimal!
+  bridger: String!
   direction: BridgeDirection!
 }
 

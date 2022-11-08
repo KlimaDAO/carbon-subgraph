@@ -30,6 +30,17 @@ export class BCT implements IPoolToken {
         return carbonMetrics
     }
 
+    returnUpdatedCrosschainSupplyMetrics(carbonMetrics: CarbonMetric, amountRaw: BigInt): CarbonMetric {
+        const oldCrosschainSupply = carbonMetrics.bctCrosschainSupply
+        const amount = toDecimal(amountRaw, this.getDecimals())
+        const newCrosschainSupply = oldCrosschainSupply.plus(amount)
+
+        carbonMetrics.bctCrosschainSupply = newCrosschainSupply
+        carbonMetrics.totalCrosschainSupply = carbonMetrics.totalCrosschainSupply.plus(amount)
+
+        return carbonMetrics
+    }
+
     returnUpdatedKlimaRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
         const oldKlimaRetired = carbonMetrics.bctKlimaRetired
         const newKlimaRetired = carbonMetrics.bctKlimaRetired.plus(toDecimal(amount, this.getDecimals()))
