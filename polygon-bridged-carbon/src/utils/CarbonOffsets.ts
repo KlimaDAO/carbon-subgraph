@@ -3,7 +3,7 @@ import { CarbonOffset, Transaction } from '../../generated/schema'
 import { ToucanCarbonOffsets } from "../../generated/templates/ToucanCarbonOffsets/ToucanCarbonOffsets"
 import { C3ProjectToken } from "../../generated/templates/C3ProjectToken/C3ProjectToken"
 import { MethodologyCategories } from "./MethodologyCategories"
-import { yearFromTimestamp } from "../../../lib/utils/Dates"
+import { stdYearFromTimestamp } from "../../../lib/utils/Dates"
 
 export function loadOrCreateCarbonOffset(transaction: Transaction, token: Address, bridge: String, registry: String): CarbonOffset {
 
@@ -69,7 +69,7 @@ export function createToucanCarbonOffset(transaction: Transaction, token: Addres
     carbonOffset.region = ''
 
     carbonOffset.vintage = attributes.value1.startTime.toString()
-    carbonOffset.vintageYear = yearFromTimestamp(attributes.value1.startTime)
+    carbonOffset.vintageYear = stdYearFromTimestamp(attributes.value1.startTime)
     carbonOffset.projectID = attributes.value0.projectId
     carbonOffset.standard = attributes.value0.standard
     carbonOffset.methodology = attributes.value0.methodology
@@ -122,7 +122,7 @@ export function createC3ProjectToken(transaction: Transaction, token: Address, b
             0
         ) / 1000
     ).toString()
-    carbonOffset.vintageYear = yearFromTimestamp(carbonOffsetERC20.getVintage())
+    carbonOffset.vintageYear = stdYearFromTimestamp(carbonOffsetERC20.getVintage())
 
     carbonOffset.name = attributes.name
     carbonOffset.projectID = attributes.project_id
