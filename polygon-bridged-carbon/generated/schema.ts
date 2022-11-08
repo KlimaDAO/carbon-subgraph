@@ -24,6 +24,7 @@ export class CarbonOffset extends Entity {
     this.set("totalRetired", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("currentSupply", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("vintage", Value.fromString(""));
+    this.set("vintageYear", Value.fromString(""));
     this.set("projectID", Value.fromString(""));
     this.set("standard", Value.fromString(""));
     this.set("methodology", Value.fromString(""));
@@ -141,6 +142,15 @@ export class CarbonOffset extends Entity {
 
   set vintage(value: string) {
     this.set("vintage", Value.fromString(value));
+  }
+
+  get vintageYear(): string {
+    let value = this.get("vintageYear");
+    return value!.toString();
+  }
+
+  set vintageYear(value: string) {
+    this.set("vintageYear", Value.fromString(value));
   }
 
   get projectID(): string {

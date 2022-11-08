@@ -1,4 +1,22 @@
-type CarbonOffset @entity {
+type _Schema_
+  @fulltext(
+    name: "carbonOffsetSearch"
+    language: en
+    algorithm: rank
+    include: [
+      { 
+         entity: "CarbonOffset", 
+         fields: [
+            { name: "methodologyCategory" },
+            { name: "region" },
+            { name: "country" },
+            { name: "vintageYear" }
+         ] 
+      }
+   ]
+  )
+  
+  type CarbonOffset @entity {
   id: ID!
   name: String!
   tokenAddress: String!
@@ -8,6 +26,7 @@ type CarbonOffset @entity {
   totalRetired: BigDecimal!
   currentSupply: BigDecimal!
   vintage: String!
+  vintageYear: String!
   projectID: String!
   standard: String!
   methodology: String!

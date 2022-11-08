@@ -1,8 +1,10 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 description: Polygon Bridged Carbon
 repository: https://github.com/KlimaDAO/carbon-subgraph
 schema:
   file: ./schema.graphql
+features:
+  - fullTextSearch
 dataSources:
   - kind: ethereum/contract
     name: ToucanFactory
