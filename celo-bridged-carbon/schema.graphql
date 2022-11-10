@@ -27,8 +27,6 @@ type CarbonOffset @entity {
   retirements: [Retire!] @derivedFrom(field: "offset")
   balanceBCT: BigDecimal!
   balanceNCT: BigDecimal!
-  balanceUBO: BigDecimal!
-  balanceNBO: BigDecimal!
   lastUpdate: BigInt!
 }
 
@@ -60,26 +58,6 @@ enum BridgeDirection {
   Received
 }
 
-type Deposit @entity {
-  id: ID!
-  timestamp: BigInt!
-  transaction: Transaction!
-  offset: CarbonOffset!
-  pool: String!
-  value: BigDecimal!
-  depositor: String!
-}
-
-type Redeem @entity {
-  id: ID!
-  timestamp: BigInt!
-  transaction: Transaction!
-  offset: CarbonOffset!
-  pool: String!
-  value: BigDecimal!
-  redeemer: String!
-}
-
 type Retire @entity {
   id: ID!
   timestamp: BigInt!
@@ -102,62 +80,14 @@ type Transaction @entity {
   gasPrice: BigInt!
 }
 
-type KlimaRetire @entity {
-  id: ID!
-  timestamp: BigInt!
-  transaction: Transaction!
-  index: BigInt!
-  offset: CarbonOffset!
-  pool: String!
-  token: String!
-  amount: BigDecimal!
-  feeAmount: BigDecimal!
-  retiringAddress: String!
-  beneficiary: String!
-  beneficiaryAddress: String!
-  retirementMessage: String!
-  specific: Boolean!
-  certificateTokenID: BigInt
-}
-
-type DailyKlimaRetirement @entity {
-  id: ID!
-  timestamp: BigInt!
-  pool: String!
-  token: String!
-  offset: CarbonOffset!
-  amount: BigDecimal!
-  feeAmount: BigDecimal!
-}
-
 type CarbonMetric @entity {
   id: ID!
   timestamp: BigInt!
   bctSupply: BigDecimal!
   nctSupply: BigDecimal!
   mco2Supply: BigDecimal!
-  uboSupply: BigDecimal!
-  nboSupply: BigDecimal!
   totalCarbonSupply: BigDecimal!
-  bctCrosschainSupply: BigDecimal!
-  nctCrosschainSupply: BigDecimal!
-  totalCrosschainSupply: BigDecimal!
   tco2Retired: BigDecimal!
   mco2Retired: BigDecimal!
-  c3tRetired: BigDecimal!
   totalRetirements: BigDecimal!
-  bctKlimaRetired: BigDecimal!
-  nctKlimaRetired: BigDecimal!
-  mco2KlimaRetired: BigDecimal!
-  uboKlimaRetired: BigDecimal!
-  nboKlimaRetired: BigDecimal!
-  totalKlimaRetirements: BigDecimal!
-}
-
-type ToucanCertificate @entity {
-  id: ID!
-  timestamp: BigInt!
-  transaction: Transaction!
-  klimaRetire: KlimaRetire
-  tokenID: BigInt!
 }

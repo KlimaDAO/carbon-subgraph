@@ -1,5 +1,5 @@
 import { Address } from "@graphprotocol/graph-ts";
-import * as constants from "../../../lib/utils/Constants";
+import * as constants from "./Constants";
 
 export function getTokenFromPoolAddress(address: Address): string {
     if (address.equals(Address.fromHexString(constants.BCT_ERC20_CONTRACT))) {

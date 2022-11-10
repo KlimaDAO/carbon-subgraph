@@ -259,6 +259,30 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleToucanCertificateTransfer
+  - kind: ethereum/contract
+    name: ToucanCrossChainMessenger
+    network: matic
+    source:
+      address: '0xABaC3D6b281Bbe0Fc0F67b26247cB27994eaAcaf'
+      abi: ToucanCrossChainMessenger
+      startBlock: 31390596
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/ToucanCrossChainMessengerHandler.ts
+      entities:
+        - ToucanCrossChainMessenger
+      abis:
+        - name: ERC20
+          file: ../lib/abis/ERC20.json
+        - name: ToucanCrossChainMessenger
+          file: ../lib/abis/ToucanCrosschainMessenger.json
+      eventHandlers:
+        - event: BridgeRequestReceived(indexed uint32,uint32,indexed address,indexed address,uint256,bytes32)
+          handler: handleBridgeRequestReceived
+        - event: BridgeRequestSent(uint32,indexed uint32,indexed address,indexed address,uint256,uint256,bytes32)
+          handler: handleBridgeRequestSent
 templates:
   - name: ToucanCarbonOffsets
     kind: ethereum/contract

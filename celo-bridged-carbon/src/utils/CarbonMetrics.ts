@@ -18,20 +18,6 @@ export class CarbonMetricUtils {
     carbonMetrics.save()
   }
 
-    static updateCrosschainTokenSupply(poolToken: IPoolToken, timestamp: BigInt, amount: BigInt): void {
-    let carbonMetrics = this.loadCarbonMetrics(timestamp)
-    carbonMetrics = poolToken.returnUpdatedCrosschainSupplyMetrics(carbonMetrics, amount)
-
-    carbonMetrics.save()
-  }
-
-  static updateKlimaRetirements(poolToken: IPoolToken, timestamp: BigInt, amount: BigInt): void {
-    let carbonMetrics = this.loadCarbonMetrics(timestamp)
-    carbonMetrics = poolToken.returnUpdatedKlimaRetirementMetrics(carbonMetrics, amount)
-
-    carbonMetrics.save()
-  }
-
   static updateCarbonTokenRetirements(carbonToken: ICarbonToken, timestamp: BigInt, amount: BigInt): void {
     let carbonMetrics = this.loadCarbonMetrics(timestamp)
     carbonMetrics = carbonToken.returnUpdatedRetirementMetrics(carbonMetrics, amount)
@@ -72,21 +58,12 @@ export class CarbonMetricUtils {
     carbonMetrics.bctSupply = BigDecimal.zero();
     carbonMetrics.nctSupply = BigDecimal.zero();
     carbonMetrics.mco2Supply = BigDecimal.zero();
-    carbonMetrics.uboSupply = BigDecimal.zero();
-    carbonMetrics.nboSupply = BigDecimal.zero();
     carbonMetrics.totalCarbonSupply = BigDecimal.zero();
   
     carbonMetrics.tco2Retired = BigDecimal.zero();
     carbonMetrics.mco2Retired = BigDecimal.zero();
-    carbonMetrics.c3tRetired = BigDecimal.zero();
   
     carbonMetrics.totalRetirements = BigDecimal.zero();
-    carbonMetrics.bctKlimaRetired = BigDecimal.zero();
-    carbonMetrics.nctKlimaRetired = BigDecimal.zero();
-    carbonMetrics.mco2KlimaRetired = BigDecimal.zero();
-    carbonMetrics.uboKlimaRetired = BigDecimal.zero();
-    carbonMetrics.nboKlimaRetired = BigDecimal.zero();
-    carbonMetrics.totalKlimaRetirements = BigDecimal.zero();
     carbonMetrics.save();
   
     return carbonMetrics;

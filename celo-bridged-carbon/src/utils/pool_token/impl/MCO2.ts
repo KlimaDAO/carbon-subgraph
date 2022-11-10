@@ -1,5 +1,5 @@
 import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
-import { ERC20 } from "../../../../generated/ToucanFactory/ERC20";
+import { ERC20 } from "../../../../generated/ToucanCrossChainMessenger/ERC20";
 import { CarbonMetric } from "../../../../generated/schema";
 import { IPoolToken } from "../IPoolToken";
 import * as constants from "../../Constants"
@@ -11,6 +11,10 @@ export class MCO2 implements IPoolToken {
 
     constructor(contractAddress: Address) {
         this.contractAddress = contractAddress
+    }
+      
+    getTotalSupply(): BigInt {
+        return ERC20.bind(this.contractAddress).totalSupply()
     }
 
     getDecimals(): number {
@@ -25,21 +29,6 @@ export class MCO2 implements IPoolToken {
         const deltaSupply = newSupply.minus(oldSupply)
         carbonMetrics.mco2Supply = newSupply
         carbonMetrics.totalCarbonSupply = carbonMetrics.totalCarbonSupply.plus(deltaSupply)
-
-        return carbonMetrics
-    }
-
-    returnUpdatedCrosschainSupplyMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
-        throw new Error("Method not implemented.");
-    }
-
-    returnUpdatedKlimaRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
-        const oldKlimaRetired = carbonMetrics.mco2KlimaRetired
-        const newKlimaRetired = carbonMetrics.mco2KlimaRetired.plus(toDecimal(amount, this.getDecimals()))
-
-        const delta = newKlimaRetired.minus(oldKlimaRetired)
-        carbonMetrics.mco2KlimaRetired = newKlimaRetired
-        carbonMetrics.totalKlimaRetirements = carbonMetrics.totalKlimaRetirements.plus(delta)
 
         return carbonMetrics
     }

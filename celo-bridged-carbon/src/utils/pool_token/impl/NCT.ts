@@ -1,16 +1,20 @@
 import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
-import { ERC20 } from "../../../../generated/ToucanFactory/ERC20";
+import { ERC20 } from "../../../../generated/ToucanCrossChainMessenger/ERC20";
 import { CarbonMetric } from "../../../../generated/schema";
 import { IPoolToken } from "../IPoolToken";
 import * as constants from "../../Constants"
 import { toDecimal } from "../../../../../lib/utils/Decimals";
 
-export class UBO implements IPoolToken {
+export class NCT implements IPoolToken {
 
     private contractAddress: Address
 
     constructor(contractAddress: Address) {
         this.contractAddress = contractAddress
+    }
+  
+    getTotalSupply(): BigInt {
+        return ERC20.bind(this.contractAddress).totalSupply()
     }
 
     getDecimals(): number {
@@ -18,30 +22,14 @@ export class UBO implements IPoolToken {
     }
 
     returnUpdatedSupplyMetrics(carbonMetrics: CarbonMetric): CarbonMetric {
-        const oldSupply = carbonMetrics.uboSupply
+        const oldSupply = carbonMetrics.nctSupply
         const newSupplyRaw = ERC20.bind(this.contractAddress).totalSupply()
         const newSupply = toDecimal(newSupplyRaw, this.getDecimals())
 
         const deltaSupply = newSupply.minus(oldSupply)
-        carbonMetrics.uboSupply = newSupply
+        carbonMetrics.nctSupply = newSupply
         carbonMetrics.totalCarbonSupply = carbonMetrics.totalCarbonSupply.plus(deltaSupply)
 
         return carbonMetrics
     }
-
-    returnUpdatedCrosschainSupplyMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
-        throw new Error("Method not implemented.");
-    }
-
-    returnUpdatedKlimaRetirementMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
-        const oldKlimaRetired = carbonMetrics.uboKlimaRetired
-        const newKlimaRetired = carbonMetrics.uboKlimaRetired.plus(toDecimal(amount, this.getDecimals()))
-
-        const delta = newKlimaRetired.minus(oldKlimaRetired)
-        carbonMetrics.uboKlimaRetired = newKlimaRetired
-        carbonMetrics.totalKlimaRetirements = carbonMetrics.totalKlimaRetirements.plus(delta)
-
-        return carbonMetrics
-    }
-
 }
