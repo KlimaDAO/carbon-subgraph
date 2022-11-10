@@ -21,7 +21,7 @@ export function handleBridgeRequestReceived(event: BridgeRequestReceived): void 
     crosschainBridge.save()
 
     CarbonMetricUtils.updatePoolTokenSupply(poolToken, event.block.timestamp)
-    CarbonMetricUtils.updateCrosschainTokenSupply(poolToken, event.block.timestamp, event.params.amount)
+    CarbonMetricUtils.updateCrosschainTokenSupply(poolToken, event.block.timestamp, event.params.amount.neg())
 }
 
 export function handleBridgeRequestSent(event: BridgeRequestSent): void {
@@ -36,5 +36,5 @@ export function handleBridgeRequestSent(event: BridgeRequestSent): void {
     crosschainBridge.save()
 
     CarbonMetricUtils.updatePoolTokenSupply(poolToken, event.block.timestamp)
-    CarbonMetricUtils.updateCrosschainTokenSupply(poolToken, event.block.timestamp, event.params.amount.neg())
+    CarbonMetricUtils.updateCrosschainTokenSupply(poolToken, event.block.timestamp, event.params.amount)
 }
