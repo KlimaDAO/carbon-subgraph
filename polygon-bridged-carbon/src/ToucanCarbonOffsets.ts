@@ -36,6 +36,10 @@ export function handleTransfer(event: Transfer): void {
     // Handle Retirements
     if (event.params.to == Address.fromString('0x0000000000000000000000000000000000000000')) {
 
+        // This is a temporary solution - we are not tracking retirements related to HFC-23 Credits
+        // What needs to be done is to track Retire events instead of Transfer
+        if (carbonOffset.methodology != "AM0001") {
+
         let retire = loadOrCreateRetire(carbonOffset, transaction)
         retire.value = toDecimal(event.params.value, 18)
         retire.retiree = event.params.from.toHexString()
@@ -43,8 +47,8 @@ export function handleTransfer(event: Transfer): void {
         retire.save()
 
         carbonOffset.totalRetired = carbonOffset.totalRetired.plus(toDecimal(event.params.value, 18))
-        //carbonOffset.retirements.push(retire.id)
-        CarbonMetricUtils.updateCarbonTokenRetirements(new TCO2(), event.block.timestamp, event.params.value)
+            CarbonMetricUtils.updateCarbonTokenRetirements(new TCO2(), event.block.timestamp, event.params.value)
+        }
     }
 
     carbonOffset.currentSupply = toDecimal(offsetERC20.totalSupply(), 18)
