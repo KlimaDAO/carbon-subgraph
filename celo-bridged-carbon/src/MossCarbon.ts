@@ -44,7 +44,6 @@ export function handleTransfer(event: Transfer): void {
 
         carbonOffset.totalBridged = carbonOffset.totalBridged.minus(toDecimal(event.params.value, 18))
         //carbonOffset.retirements.push(retire.id)
-        CarbonMetricUtils.updateCarbonTokenRetirements(new cMCO2(), event.block.timestamp, event.params.value)
 
     }
 
