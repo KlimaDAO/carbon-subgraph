@@ -8,7 +8,7 @@ jobs:
     name: Compile
     strategy:
       matrix:
-        value: ["ethereum-bridged-carbon", "polygon-bridged-carbon"]
+        value: ["ethereum-bridged-carbon", "polygon-bridged-carbon", "celo-bridged-carbon"]
     steps:
     - name: Check out source repository
       uses: actions/checkout@v2
