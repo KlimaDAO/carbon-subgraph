@@ -1,4 +1,4 @@
-import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts"
+import { Address, BigDecimal, BigInt, log } from "@graphprotocol/graph-ts"
 import { CarbonOffset, Transaction } from '../../generated/schema'
 import { ToucanCarbonOffsets } from "../../generated/templates/ToucanCarbonOffsets/ToucanCarbonOffsets"
 import { C3ProjectToken } from "../../generated/templates/C3ProjectToken/C3ProjectToken"
@@ -116,13 +116,13 @@ export function createC3ProjectToken(transaction: Transaction, token: Address, b
         carbonOffset.registry = attributes.registry
     }
 
-    carbonOffset.vintage = (
-        Date.UTC(
-            carbonOffsetERC20.getVintage().toI32(),
-            0
-        ) / 1000
-    ).toString()
-    carbonOffset.vintageYear = stdYearFromTimestamp(carbonOffsetERC20.getVintage())
+    const vintageParsed = BigInt.fromI64((Date.UTC(
+        carbonOffsetERC20.getVintage().toI32(),
+        0
+    ) / 1000))
+
+    carbonOffset.vintage = vintageParsed.toString()
+    carbonOffset.vintageYear = stdYearFromTimestamp(vintageParsed)
 
     carbonOffset.name = attributes.name
     carbonOffset.projectID = attributes.project_id
