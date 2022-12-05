@@ -1,4 +1,4 @@
-import { Address, BigDecimal, BigInt, log } from "@graphprotocol/graph-ts"
+import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts"
 import { CarbonOffset, Transaction } from '../../generated/schema'
 import { ToucanCarbonOffsets } from "../../generated/templates/ToucanCarbonOffsets/ToucanCarbonOffsets"
 import { C3ProjectToken } from "../../generated/templates/C3ProjectToken/C3ProjectToken"
