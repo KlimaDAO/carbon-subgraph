@@ -1,6 +1,7 @@
 import { MossRetired, RetireMossCarbon } from "../generated/RetireMossCarbon/RetireMossCarbon"
 import { RetireToucanCarbon, ToucanRetired } from "../generated/RetireToucanCarbon/RetireToucanCarbon"
 import { C3Retired, RetireC3Carbon } from "../generated/RetireC3Carbon/RetireC3Carbon"
+import { CarbonRetired, KlimaInfinity } from "../generated/KlimaInfinity/KlimaInfinity"
 import { KlimaRetire, DailyKlimaRetirement, ToucanCertificate } from "../generated/schema";
 import * as constants from "./utils/Constants";
 
@@ -121,6 +122,37 @@ export function handleC3Retired(event: C3Retired): void {
     retire.save()
 }
 
+export function handleCarbonRetired(event: CarbonRetired): void {
+    let transaction = loadOrCreateTransaction(event.transaction, event.block)
+    let offset = loadOrCreateCarbonOffset(transaction, event.params.carbonToken, getBridgeName(event.params.carbonBridge), 'Verra')
+    let retire = loadOrCreateKlimaRetire(offset, transaction)
+    let klimaRetirements = KlimaCarbonRetirements.bind(Address.fromString(constants.KLIMA_CARBON_RETIREMENTS_CONTRACT))
+
+    const token = getTokenFromPoolAddress(event.params.carbonPool)
+    const fee = BigDecimal.fromString('.01') // Currently no getter for this in the contract.
+
+    retire.retiringAddress = event.params.retiringAddress.toHexString()
+    retire.beneficiaryAddress = event.params.beneficiaryAddress.toHexString()
+    retire.index = klimaRetirements.retirements(event.params.beneficiaryAddress).value0.minus(BigInt.fromI32(1))
+
+    retire.beneficiary = event.params.beneficiaryString
+    retire.retirementMessage = event.params.retirementMessage
+
+    retire.pool = event.params.carbonPool.toHexString()
+    retire.token = token
+    retire.amount = toDecimal(event.params.retiredAmount)
+    retire.feeAmount = retire.amount.times(fee)
+
+    const dailyKlimaRetirement = generateDailyKlimaRetirement(retire)
+    dailyKlimaRetirement.save()
+    // TODO: add separate handler for specific retirements
+    // retire.specific = true
+
+    updateKlimaRetirementProtocolMetrics(retire.pool, event.block.timestamp, event.params.retiredAmount)
+
+    retire.save()
+}
+
 function generateDailyKlimaRetirement(klimaRetire: KlimaRetire): DailyKlimaRetirement {
 
     const dayTimestamp = dayFromTimestamp(klimaRetire.timestamp)
@@ -139,4 +171,11 @@ function generateDailyKlimaRetirement(klimaRetire: KlimaRetire): DailyKlimaRetir
 function updateKlimaRetirementProtocolMetrics(pool: string, timestamp: BigInt, retiredAmount: BigInt): void {
     const token = new PoolTokenFactory().getTokenForAddress(Address.fromString(pool))
     CarbonMetricUtils.updateKlimaRetirements(token, timestamp, retiredAmount)
+}
+
+function getBridgeName(value: i32): string {
+    if (value == 0) return 'Toucan'
+    if (value == 1) return 'Moss'
+    if (value == 2) return 'C3'
+    return 'Unknown'
 }
