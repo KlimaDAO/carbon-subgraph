@@ -150,6 +150,13 @@ export function handleCarbonRetired(event: CarbonRetired): void {
 
     updateKlimaRetirementProtocolMetrics(retire.pool, event.block.timestamp, event.params.retiredAmount)
 
+    let toucanCertificate = loadToucanCertificate(transaction)
+    if (toucanCertificate != null) {
+        retire.certificateTokenID = toucanCertificate.tokenID
+        toucanCertificate.klimaRetire = retire.id
+        toucanCertificate.save()
+    }
+
     retire.save()
 }
 
