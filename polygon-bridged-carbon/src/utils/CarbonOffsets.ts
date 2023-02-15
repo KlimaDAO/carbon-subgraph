@@ -127,7 +127,7 @@ export function createC3ProjectToken(transaction: Transaction, token: Address, b
     carbonOffset.vintageYear = stdYearFromTimestamp(vintageParsed)
 
     carbonOffset.name = attributes.name
-    carbonOffset.projectID = attributes.project_id
+    carbonOffset.projectID = attributes.registry + '-' + attributes.project_id
     carbonOffset.standard = attributes.registry
     carbonOffset.methodology = attributes.methodology
     carbonOffset.methodologyCategory = MethodologyCategories.getMethodologyCategory(carbonOffset.methodology)
