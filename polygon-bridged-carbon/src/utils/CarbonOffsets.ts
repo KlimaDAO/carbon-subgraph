@@ -1,24 +1,21 @@
-import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts"
+import { Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 import { CarbonOffset, Transaction } from '../../generated/schema'
-import { ToucanCarbonOffsets } from "../../generated/templates/ToucanCarbonOffsets/ToucanCarbonOffsets"
-import { C3ProjectToken } from "../../generated/templates/C3ProjectToken/C3ProjectToken"
-import { MethodologyCategories } from "./MethodologyCategories"
-import { stdYearFromTimestamp } from "../../../lib/utils/Dates"
+import { ToucanCarbonOffsets } from '../../generated/templates/ToucanCarbonOffsets/ToucanCarbonOffsets'
+import { C3ProjectToken } from '../../generated/templates/C3ProjectToken/C3ProjectToken'
+import { MethodologyCategories } from './MethodologyCategories'
+import { stdYearFromTimestamp } from '../../../lib/utils/Dates'
+import { VERRA_PROJECT_NAMES } from '../../../lib/utils/VerraProjectInfo'
 
 export function loadOrCreateCarbonOffset(transaction: Transaction, token: Address, bridge: String, registry: String): CarbonOffset {
-
     let id = token.toHex()
 
     let carbonOffset = CarbonOffset.load(id)
     if (carbonOffset == null) {
-
         if (bridge == 'Toucan') {
             carbonOffset = createToucanCarbonOffset(transaction, token, bridge, registry)
-        }
-        else if (bridge == 'C3') {
+        } else if (bridge == 'C3') {
             carbonOffset = createC3ProjectToken(transaction, token, bridge)
-        }
-        else {
+        } else {
             carbonOffset = new CarbonOffset(id)
             carbonOffset.tokenAddress = token.toHex()
             carbonOffset.bridge = bridge.toString()
@@ -46,7 +43,6 @@ export function loadOrCreateCarbonOffset(transaction: Transaction, token: Addres
     }
 
     return carbonOffset as CarbonOffset
-
 }
 
 // Create and set the attribute information for a TCO2 Token
@@ -86,6 +82,15 @@ export function createToucanCarbonOffset(transaction: Transaction, token: Addres
     carbonOffset.klimaRanking = BigInt.fromString(carbonOffset.vintage + carbonOffset.projectID.substring(4).padStart(6, '0'))
     carbonOffset.lastUpdate = transaction.timestamp
 
+    // Manually update some of the items missing from the initial Toucan bridging
+    for (let i = 0; i < VERRA_PROJECT_NAMES.length; i++) {
+        if (attributes.value0.projectId == VERRA_PROJECT_NAMES[i][0]) {
+            carbonOffset.name = VERRA_PROJECT_NAMES[i][1]
+            carbonOffset.country = VERRA_PROJECT_NAMES[i][2]
+            break
+        }
+    }
+
     // Exclude the HFC methodology from jumping to the front of the list.
     if (token.toString() == '0x92BFcddaC83f2e94f02fc7aA092EB6AEc08A0DEC') {
         carbonOffset.klimaRanking = BigInt.fromString('253370786400' + carbonOffset.projectID.substring(4).padStart(6, '0'))
@@ -116,10 +121,7 @@ export function createC3ProjectToken(transaction: Transaction, token: Address, b
         carbonOffset.registry = attributes.registry
     }
 
-    const vintageParsed = BigInt.fromI64((Date.UTC(
-        carbonOffsetERC20.getVintage().toI32(),
-        0
-    ) / 1000))
+    const vintageParsed = BigInt.fromI64(Date.UTC(carbonOffsetERC20.getVintage().toI32(), 0) / 1000)
 
     carbonOffset.vintage = vintageParsed.toString()
     carbonOffset.vintageYear = stdYearFromTimestamp(vintageParsed)
@@ -140,7 +142,6 @@ export function createC3ProjectToken(transaction: Transaction, token: Address, b
     carbonOffset.emissionType = ''
     carbonOffset.coBenefits = ''
     carbonOffset.correspAdjustment = ''
-
 
     carbonOffset.klimaRanking = BigInt.fromString(carbonOffset.vintage + carbonOffset.projectID.substring(4).padStart(6, '0'))
     carbonOffset.lastUpdate = transaction.timestamp
