@@ -1,33 +1,34 @@
-import { MossRetired, RetireMossCarbon } from "../generated/RetireMossCarbon/RetireMossCarbon"
-import { RetireToucanCarbon, ToucanRetired } from "../generated/RetireToucanCarbon/RetireToucanCarbon"
-import { C3Retired, RetireC3Carbon } from "../generated/RetireC3Carbon/RetireC3Carbon"
-import { CarbonRetired, KlimaInfinity } from "../generated/KlimaInfinity/KlimaInfinity"
-import { KlimaRetire, DailyKlimaRetirement, ToucanCertificate } from "../generated/schema";
-import * as constants from "./utils/Constants";
+import { MossRetired, RetireMossCarbon } from '../generated/RetireMossCarbon/RetireMossCarbon'
+import { RetireToucanCarbon, ToucanRetired } from '../generated/RetireToucanCarbon/RetireToucanCarbon'
+import { C3Retired, RetireC3Carbon } from '../generated/RetireC3Carbon/RetireC3Carbon'
+import { CarbonRetired, KlimaInfinity } from '../generated/KlimaInfinity/KlimaInfinity'
+import { KlimaRetire, DailyKlimaRetirement, ToucanCertificate } from '../generated/schema'
+import * as constants from './utils/Constants'
 
-import { KlimaCarbonRetirements } from "../generated/RetireC3Carbon/KlimaCarbonRetirements"
-import { loadOrCreateCarbonOffset } from "./utils/CarbonOffsets"
-import { loadOrCreateDailyKlimaRetirement as loadOrCreateDailyKlimaRetirement } from "./utils/DailyKlimaRetirement"
-import { getTokenFromPoolAddress } from "./utils/Token"
-import { toDecimal } from "../../lib/utils/Decimals"
-import { dayFromTimestamp } from "../../lib/utils/Dates"
-import { loadOrCreateTransaction } from "./utils/Transactions"
-import { loadOrCreateKlimaRetire } from "./utils/KlimaRetire"
-import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts"
-import { CarbonMetricUtils } from "./utils/CarbonMetrics"
-import { MCO2 } from "./utils/pool_token/impl/MCO2"
-import { PoolTokenFactory } from "./utils/pool_token/PoolTokenFactory"
-import { loadToucanCertificate } from "./utils/ToucanCertificate";
+import { KlimaCarbonRetirements } from '../generated/RetireC3Carbon/KlimaCarbonRetirements'
+import { loadOrCreateCarbonOffset } from './utils/CarbonOffsets'
+import { loadOrCreateDailyKlimaRetirement } from './utils/DailyKlimaRetirement'
+import { getTokenFromPoolAddress } from './utils/Token'
+import { toDecimal } from '../../lib/utils/Decimals'
+import { dayFromTimestamp } from '../../lib/utils/Dates'
+import { loadOrCreateTransaction } from './utils/Transactions'
+import { loadOrCreateKlimaRetire } from './utils/KlimaRetire'
+import { Address, BigDecimal, BigInt, Bytes } from '@graphprotocol/graph-ts'
+import { CarbonMetricUtils } from './utils/CarbonMetrics'
+import { MCO2 } from './utils/pool_token/impl/MCO2'
+import { PoolTokenFactory } from './utils/pool_token/PoolTokenFactory'
+import { loadToucanCertificate } from './utils/ToucanCertificate'
 
 export function handleMossRetired(event: MossRetired): void {
-
     let transaction = loadOrCreateTransaction(event.transaction, event.block)
     let offset = loadOrCreateCarbonOffset(transaction, event.params.carbonPool, 'Moss', 'Verra')
     let retire = loadOrCreateKlimaRetire(offset, transaction)
     let klimaRetirements = KlimaCarbonRetirements.bind(Address.fromString(constants.KLIMA_CARBON_RETIREMENTS_CONTRACT))
 
     const token = getTokenFromPoolAddress(event.params.carbonPool)
-    const fee = RetireMossCarbon.bind(event.address).feeAmount().toBigDecimal()
+    const fee = RetireMossCarbon.bind(event.address)
+        .feeAmount()
+        .toBigDecimal()
 
     retire.retiringAddress = event.params.retiringAddress.toHexString()
     retire.beneficiaryAddress = event.params.beneficiaryAddress.toHexString()
@@ -39,7 +40,7 @@ export function handleMossRetired(event: MossRetired): void {
     retire.pool = event.params.carbonPool.toHexString()
     retire.token = token
     retire.amount = toDecimal(event.params.retiredAmount)
-    retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString("1000")))
+    retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString('1000')))
 
     const dailyRetirement = generateDailyKlimaRetirement(retire)
     dailyRetirement.save()
@@ -59,7 +60,9 @@ export function handleToucanRetired(event: ToucanRetired): void {
     let klimaRetirements = KlimaCarbonRetirements.bind(Address.fromString(constants.KLIMA_CARBON_RETIREMENTS_CONTRACT))
 
     const token = getTokenFromPoolAddress(event.params.carbonPool)
-    const fee = RetireToucanCarbon.bind(event.address).feeAmount().toBigDecimal()
+    const fee = RetireToucanCarbon.bind(event.address)
+        .feeAmount()
+        .toBigDecimal()
 
     retire.retiringAddress = event.params.retiringAddress.toHexString()
     retire.beneficiaryAddress = event.params.beneficiaryAddress.toHexString()
@@ -71,7 +74,7 @@ export function handleToucanRetired(event: ToucanRetired): void {
     retire.pool = event.params.carbonPool.toHexString()
     retire.token = token
     retire.amount = toDecimal(event.params.retiredAmount)
-    retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString("1000")))
+    retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString('1000')))
 
     const dailyRetirement = generateDailyKlimaRetirement(retire)
     dailyRetirement.save()
@@ -98,7 +101,9 @@ export function handleC3Retired(event: C3Retired): void {
     let klimaRetirements = KlimaCarbonRetirements.bind(Address.fromString(constants.KLIMA_CARBON_RETIREMENTS_CONTRACT))
 
     const token = getTokenFromPoolAddress(event.params.carbonPool)
-    const fee = RetireC3Carbon.bind(event.address).feeAmount().toBigDecimal()
+    const fee = RetireC3Carbon.bind(event.address)
+        .feeAmount()
+        .toBigDecimal()
 
     retire.retiringAddress = event.params.retiringAddress.toHexString()
     retire.beneficiaryAddress = event.params.beneficiaryAddress.toHexString()
@@ -110,7 +115,7 @@ export function handleC3Retired(event: C3Retired): void {
     retire.pool = event.params.carbonPool.toHexString()
     retire.token = token
     retire.amount = toDecimal(event.params.retiredAmount)
-    retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString("1000")))
+    retire.feeAmount = retire.amount.times(fee.div(BigDecimal.fromString('1000')))
 
     const dailyKlimaRetirement = generateDailyKlimaRetirement(retire)
     dailyKlimaRetirement.save()
@@ -128,7 +133,6 @@ export function handleCarbonRetired(event: CarbonRetired): void {
     let retire = loadOrCreateKlimaRetire(offset, transaction)
     let klimaRetirements = KlimaCarbonRetirements.bind(Address.fromString(constants.KLIMA_CARBON_RETIREMENTS_CONTRACT))
 
-    const token = getTokenFromPoolAddress(event.params.carbonPool)
     const fee = BigDecimal.fromString('.01') // Currently no getter for this in the contract.
 
     retire.retiringAddress = event.params.retiringAddress.toHexString()
@@ -139,7 +143,7 @@ export function handleCarbonRetired(event: CarbonRetired): void {
     retire.retirementMessage = event.params.retirementMessage
 
     retire.pool = event.params.carbonPool.toHexString()
-    retire.token = token
+    retire.token = event.params.carbonToken.toHexString()
     retire.amount = toDecimal(event.params.retiredAmount)
     retire.feeAmount = retire.amount.times(fee)
 
@@ -148,7 +152,8 @@ export function handleCarbonRetired(event: CarbonRetired): void {
     // TODO: add separate handler for specific retirements
     // retire.specific = true
 
-    updateKlimaRetirementProtocolMetrics(retire.pool, event.block.timestamp, event.params.retiredAmount)
+    if (event.params.carbonPool != Address.fromString('0x0000000000000000000000000000000000000000'))
+        updateKlimaRetirementProtocolMetrics(retire.pool, event.block.timestamp, event.params.retiredAmount)
 
     let toucanCertificate = loadToucanCertificate(transaction)
     if (toucanCertificate != null) {
@@ -161,7 +166,6 @@ export function handleCarbonRetired(event: CarbonRetired): void {
 }
 
 function generateDailyKlimaRetirement(klimaRetire: KlimaRetire): DailyKlimaRetirement {
-
     const dayTimestamp = dayFromTimestamp(klimaRetire.timestamp)
     const id = dayTimestamp + klimaRetire.token
 
