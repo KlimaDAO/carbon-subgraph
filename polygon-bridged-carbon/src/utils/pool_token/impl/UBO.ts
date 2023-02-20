@@ -44,4 +44,12 @@ export class UBO implements IPoolToken {
         return carbonMetrics
     }
 
+    returnUpdatedRedemptionMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
+        const oldRedeemed = carbonMetrics.uboRedeemed
+        const newReeemed = carbonMetrics.uboRedeemed.plus(toDecimal(amount, this.getDecimals()))
+
+        carbonMetrics.uboRedeemed = newReeemed
+
+        return carbonMetrics
+    }
 }

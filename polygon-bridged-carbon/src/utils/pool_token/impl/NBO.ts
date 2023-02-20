@@ -44,4 +44,13 @@ export class NBO implements IPoolToken {
         return carbonMetrics
     }
 
+    returnUpdatedRedemptionMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
+        const oldRedeemed = carbonMetrics.nboRedeemed
+        const newReeemed = carbonMetrics.nboRedeemed.plus(toDecimal(amount, this.getDecimals()))
+
+        carbonMetrics.nboRedeemed = newReeemed
+
+        return carbonMetrics
+    }
+
 }

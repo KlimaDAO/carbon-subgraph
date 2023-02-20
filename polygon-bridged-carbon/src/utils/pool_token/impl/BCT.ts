@@ -51,4 +51,13 @@ export class BCT implements IPoolToken {
 
         return carbonMetrics
     }
+
+    returnUpdatedRedemptionMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
+        const oldRedeemed = carbonMetrics.bctRedeemed
+        const newReeemed = carbonMetrics.bctRedeemed.plus(toDecimal(amount, this.getDecimals()))
+
+        carbonMetrics.bctRedeemed = newReeemed
+
+        return carbonMetrics
+    }
 }
