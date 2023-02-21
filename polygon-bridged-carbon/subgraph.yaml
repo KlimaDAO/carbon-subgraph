@@ -242,6 +242,30 @@ dataSources:
         - event: C3Retired(indexed address,indexed address,string,string,indexed address,address,uint256)
           handler: handleC3Retired
   - kind: ethereum/contract
+    name: KlimaInfinity
+    network: matic
+    source:
+      address: '0x8cE54d9625371fb2a068986d32C85De8E6e995f8'
+      abi: KlimaInfinity
+      startBlock: 36550000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/KlimaRetirementAggregator.ts
+      entities:
+        - KlimaRetire
+      abis:
+        - name: KlimaInfinity
+          file: ../lib/abis/KlimaInfinity.json
+        - name: KlimaCarbonRetirements
+          file: ../lib/abis/KlimaCarbonRetirements.json
+        - name: ERC20
+          file: ../lib/abis/ERC20.json
+      eventHandlers:
+        - event: CarbonRetired(uint8,indexed address,string,indexed address,string,string,indexed address,address,uint256)
+          handler: handleCarbonRetired
+  - kind: ethereum/contract
     name: ToucanCertificate
     network: matic
     source:
