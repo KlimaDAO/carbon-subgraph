@@ -1229,6 +1229,10 @@ export class CarbonMetric extends Entity {
     this.set("mco2Supply", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("uboSupply", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("nboSupply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("bctRedeemed", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("nctRedeemed", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("uboRedeemed", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("nboRedeemed", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("totalCarbonSupply", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("bctCrosschainSupply", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("nctCrosschainSupply", Value.fromBigDecimal(BigDecimal.zero()));
@@ -1323,6 +1327,42 @@ export class CarbonMetric extends Entity {
 
   set nboSupply(value: BigDecimal) {
     this.set("nboSupply", Value.fromBigDecimal(value));
+  }
+
+  get bctRedeemed(): BigDecimal {
+    let value = this.get("bctRedeemed");
+    return value!.toBigDecimal();
+  }
+
+  set bctRedeemed(value: BigDecimal) {
+    this.set("bctRedeemed", Value.fromBigDecimal(value));
+  }
+
+  get nctRedeemed(): BigDecimal {
+    let value = this.get("nctRedeemed");
+    return value!.toBigDecimal();
+  }
+
+  set nctRedeemed(value: BigDecimal) {
+    this.set("nctRedeemed", Value.fromBigDecimal(value));
+  }
+
+  get uboRedeemed(): BigDecimal {
+    let value = this.get("uboRedeemed");
+    return value!.toBigDecimal();
+  }
+
+  set uboRedeemed(value: BigDecimal) {
+    this.set("uboRedeemed", Value.fromBigDecimal(value));
+  }
+
+  get nboRedeemed(): BigDecimal {
+    let value = this.get("nboRedeemed");
+    return value!.toBigDecimal();
+  }
+
+  set nboRedeemed(value: BigDecimal) {
+    this.set("nboRedeemed", Value.fromBigDecimal(value));
   }
 
   get totalCarbonSupply(): BigDecimal {

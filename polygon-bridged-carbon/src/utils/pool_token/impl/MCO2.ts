@@ -43,4 +43,8 @@ export class MCO2 implements IPoolToken {
 
         return carbonMetrics
     }
+
+    returnUpdatedRedemptionMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
+        throw new Error("MCO2 is not redeemable");
+    }
 }

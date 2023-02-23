@@ -157,6 +157,10 @@ type CarbonMetric @entity {
   mco2Supply: BigDecimal!
   uboSupply: BigDecimal!
   nboSupply: BigDecimal!
+  bctRedeemed: BigDecimal!
+  nctRedeemed: BigDecimal!
+  uboRedeemed: BigDecimal!
+  nboRedeemed: BigDecimal!
   totalCarbonSupply: BigDecimal!
   bctCrosschainSupply: BigDecimal!
   nctCrosschainSupply: BigDecimal!

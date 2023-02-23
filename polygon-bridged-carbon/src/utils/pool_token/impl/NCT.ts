@@ -51,4 +51,12 @@ export class NCT implements IPoolToken {
         return carbonMetrics
     }
 
+    returnUpdatedRedemptionMetrics(carbonMetrics: CarbonMetric, amount: BigInt): CarbonMetric {
+        const oldRedeemed = carbonMetrics.nctRedeemed
+        const newReeemed = carbonMetrics.nctRedeemed.plus(toDecimal(amount, this.getDecimals()))
+
+        carbonMetrics.nctRedeemed = newReeemed
+
+        return carbonMetrics
+    }
 }

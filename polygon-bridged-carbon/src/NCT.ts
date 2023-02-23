@@ -40,4 +40,5 @@ export function handleRedeem(event: Redeemed): void {
     redeem.save()
 
     CarbonMetricUtils.updatePoolTokenSupply(new NCT(event.address), event.block.timestamp)
+    CarbonMetricUtils.updatePoolTokenRedemptions(new NCT(event.address), event.block.timestamp, event.params.amount)
 }

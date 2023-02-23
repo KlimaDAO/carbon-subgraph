@@ -32,6 +32,13 @@ export class CarbonMetricUtils {
     carbonMetrics.save()
   }
 
+  static updatePoolTokenRedemptions(poolToken: IPoolToken, timestamp: BigInt, amount: BigInt): void {
+    let carbonMetrics = this.loadCarbonMetrics(timestamp)
+    carbonMetrics = poolToken.returnUpdatedRedemptionMetrics(carbonMetrics, amount)
+
+    carbonMetrics.save()
+  }
+
   static updateCarbonTokenRetirements(carbonToken: ICarbonToken, timestamp: BigInt, amount: BigInt): void {
     let carbonMetrics = this.loadCarbonMetrics(timestamp)
     carbonMetrics = carbonToken.returnUpdatedRetirementMetrics(carbonMetrics, amount)
