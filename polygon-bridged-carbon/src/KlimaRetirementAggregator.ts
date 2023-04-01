@@ -129,7 +129,15 @@ export function handleC3Retired(event: C3Retired): void {
 
 export function handleCarbonRetired(event: CarbonRetired): void {
     let transaction = loadOrCreateTransaction(event.transaction, event.block)
-    let offset = loadOrCreateCarbonOffset(transaction, event.params.carbonToken, getBridgeName(event.params.carbonBridge), 'Verra')
+
+    let bridge = getBridgeName(event.params.carbonBridge)
+
+    let offset = loadOrCreateCarbonOffset(
+        transaction,
+        bridge == 'Moss' ? event.params.carbonPool : event.params.carbonToken,
+        bridge,
+        'Verra'
+    )
     let retire = loadOrCreateKlimaRetire(offset, transaction)
     let klimaRetirements = KlimaCarbonRetirements.bind(Address.fromString(constants.KLIMA_CARBON_RETIREMENTS_CONTRACT))
 
