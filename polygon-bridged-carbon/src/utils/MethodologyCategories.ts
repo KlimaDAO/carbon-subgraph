@@ -6,7 +6,7 @@ export class MethodologyCategories {
    * Since there are occurences of multiple methodologies separated by comma, if methodology is not found initially within a map, methodology is split into array.
    * That array will be iterated and checked if category for each methodology in array exists.
    * @param methodology Methodology of an offset
-   * @returns 
+   * @returns
    */
   public static getMethodologyCategory(methodology: string): string {
     const map = this.getMap()
@@ -15,7 +15,7 @@ export class MethodologyCategories {
     }
     if (map.has(methodology)) {
       return map.get(methodology)
-    } 
+    }
 
     const methodologyArray = methodology.split(",")
     const categories = this.getCategoriesFromMultipleMethodologies(methodologyArray, map)
@@ -111,7 +111,6 @@ export class MethodologyCategories {
     map.set("VM0007", "Forestry");
     map.set("VM0024", "Forestry");
     map.set("VM0027", "Forestry");
-    map.set("VM0033", "Forestry");
     map.set("VM0036", "Forestry");
     map.set("VM0003", "Forestry");
     map.set("VM0004", "Forestry");
@@ -128,18 +127,21 @@ export class MethodologyCategories {
     map.set("VM0035", "Forestry");
     map.set("VM0037", "Forestry");
     map.set("AR-ACM0003", "Forestry");
-    map.set("AR-AM0014", "Forestry");
     map.set("AR-AMS0003", "Forestry");
     map.set("AR-AMS0007", "Forestry");
     map.set("AR-ACM0001", "Forestry");
     map.set("AM0014", "Forestry");
+
+    // Blue Carbon
+    map.set("VM0033", "Blue Carbon");
+    map.set("AR-AM0014", "Blue Carbon");
 
     //Other nature based
     map.set("VM0021", "Other Nature-Based");
     map.set("VM0026", "Other Nature-Based");
     map.set("VM0032", "Other Nature-Based");
     map.set("AM0010", "Other Nature Based");
-        
+
     //Industrial processing
     map.set("AM0048", "Industrial Processing");
     map.set("AM0050", "Industrial Processing");
