@@ -1,4 +1,8 @@
+# DEPRECATED! This codebase has been consolidated into https://github.com/klimadao/klima-subgraph 
+# so this repo is now archived!
+
 # carbon-subgraph
+
 Polygon Bridged Carbon Analytics
 
 The main subgraph that houses all of the data components indexed by a graph node.
